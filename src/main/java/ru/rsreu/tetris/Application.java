@@ -3,6 +3,8 @@ package ru.rsreu.tetris;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import ru.rsreu.tetris.game.Game;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +17,7 @@ public class Application extends javafx.application.Application {
         ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", new Locale("en"));
         URL location = Application.class.getResource("main-menu.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location, bundle);
+        fxmlLoader.setControllerFactory(param -> new Controller(stage));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
