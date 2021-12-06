@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import ru.rsreu.tetris.game.Game;
 
 import java.io.IOException;
 import java.net.URL;
