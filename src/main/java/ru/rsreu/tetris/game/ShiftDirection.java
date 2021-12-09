@@ -1,5 +1,5 @@
 package ru.rsreu.tetris.game;
 
-enum ShiftDirection {
+public enum ShiftDirection {
     NONE, LEFT, RIGHT
 }

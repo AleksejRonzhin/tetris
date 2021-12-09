@@ -11,6 +11,7 @@ public class GameController {
 
     @FXML
     public void btnStartOnAction(ActionEvent actionEvent) {
-        Game game = new Game();
+        Game game = new Game(this.gameCanvas);
+        game.start();
     }
 }

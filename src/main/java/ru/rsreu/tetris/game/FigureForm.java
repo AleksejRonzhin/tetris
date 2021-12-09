@@ -5,12 +5,12 @@ import javafx.scene.paint.Color;
 import java.util.Random;
 
 public enum FigureForm {
-    I_FORM(CoordsMask.I_FORM, Color.BLACK);
+    I_FORM(CoordsMask.I_FORM, Color.RED);
 
     private CoordsMask mask;
     private Color color;
 
-    private static final FigureForm[] forms = {I_FORM, I_FORM};
+    private static final FigureForm[] forms = {I_FORM};
 
     public static FigureForm getRandomForm(){
         int number = new Random().nextInt(forms.length);
@@ -27,6 +27,6 @@ public enum FigureForm {
     }
 
     public Color getColor() {
-        return color;
+        return this.color;
     }
 }

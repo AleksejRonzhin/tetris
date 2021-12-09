@@ -43,7 +43,7 @@ public class Figure {
     }
 
     public Coords[] getFallenCoords(){
-        Coords newMetaCoords = new Coords(metaCoords.getX() - 1, metaCoords.getY());
+        Coords newMetaCoords = new Coords(metaCoords.getX(), metaCoords.getY() - 1);
         return form.getMask().generateFigure(newMetaCoords, currentRotation);
     }
 
