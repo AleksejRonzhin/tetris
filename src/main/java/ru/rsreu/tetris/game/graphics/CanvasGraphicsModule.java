@@ -9,26 +9,45 @@ import ru.rsreu.tetris.game.GameField;
 
 public class CanvasGraphicsModule implements GraphicsModule {
 
-    private static final int SIZE = 20;
-    private Canvas canvas;
+    private final int size;
+    private final Canvas canvas;
+    private final GraphicsContext gc;
 
     public CanvasGraphicsModule(Canvas canvas) {
         this.canvas = canvas;
+        gc = canvas.getGraphicsContext2D();
+        size = (int) (canvas.getHeight() / GameField.COUNT_CELLS_Y);
     }
 
     @Override
     public void draw(GameField field) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        for(int x = 0; x < GameField.COUNT_CELLS_X; x++){
-            for(int y = 0; y < GameField.COUNT_CELLS_Y; y++){
-                gc.setFill(field.getColor(x, y));
-                gc.fillRect(x * SIZE, 400 - (y + 1) * SIZE, SIZE, SIZE);
+        drawBackground();
+        drawField(field);
+        drawFigure(field.getFigure());
+    }
+
+    private void drawBackground() {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+    private void drawField(GameField field) {
+        for (int x = 0; x < GameField.COUNT_CELLS_X; x++) {
+            for (int y = 0; y < GameField.COUNT_CELLS_Y; y++) {
+                drawBlock(field.getBlock(x, y).getColor().darker(), new Coords(x, y));
             }
         }
-        Figure figure = field.getFigure();
-        gc.setFill(Color.YELLOW);
-        for(Coords coords: figure.getCoords()){
-            gc.fillRect(coords.getX() * SIZE, 400 - (coords.getY() + 1) * SIZE, SIZE, SIZE);
+    }
+
+    private void drawBlock(Color color, Coords coords) {
+        gc.setFill(color);
+        gc.fillRect(coords.getX() * size + 1.5,
+                canvas.getHeight() - (coords.getY() + 1) * size + 1.5, size - 3, size - 3);
+    }
+
+    private void drawFigure(Figure figure) {
+        for (Coords coords : figure.getCoords()) {
+            drawBlock(figure.getColor(), coords);
         }
     }
 }

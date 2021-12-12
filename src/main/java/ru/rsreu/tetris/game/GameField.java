@@ -1,7 +1,5 @@
 package ru.rsreu.tetris.game;
 
-import javafx.scene.paint.Color;
-
 import java.util.Random;
 
 public class GameField {
@@ -9,17 +7,17 @@ public class GameField {
     public static final int COUNT_CELLS_Y = 20;
     public static final int OFFSET_TOP = 2;
 
-    private final Color[][] field;
+    private final Block[][] field;
     private final int[] countFilledCells;
     private Figure figure;
 
     public GameField() {
         spawnNewFigure();
-        field = new Color[COUNT_CELLS_X][COUNT_CELLS_Y + OFFSET_TOP];
+        field = new Block[COUNT_CELLS_X][COUNT_CELLS_Y + OFFSET_TOP];
         countFilledCells = new int[COUNT_CELLS_Y + OFFSET_TOP];
         for (int x = 0; x < COUNT_CELLS_X; x++) {
             for (int y = 0; y < COUNT_CELLS_Y + OFFSET_TOP; y++) {
-                field[x][y] = Color.WHITE;
+                field[x][y] = Block.EMPTY;
             }
         }
         for (int y = 0; y < COUNT_CELLS_Y + OFFSET_TOP; y++) {
@@ -27,7 +25,7 @@ public class GameField {
         }
     }
 
-    public Color getColor(int x, int y) {
+    public Block getBlock(int x, int y) {
         return field[x][y];
     }
 
@@ -41,7 +39,7 @@ public class GameField {
     }
 
     public boolean isEmpty(int x, int y) {
-        return (field[x][y].equals(Color.WHITE));
+        return (field[x][y].equals(Block.EMPTY));
     }
 
     public void tryShiftFigure(ShiftDirection direction) {
@@ -84,7 +82,7 @@ public class GameField {
         Coords[] figureCoords = figure.getCoords();
         boolean haveToShiftLinesDown = false;
         for (Coords coords : figureCoords) {
-            field[coords.getX()][coords.getY()] = figure.getColor();
+            field[coords.getX()][coords.getY()] = new Block(figure.getColor());
             countFilledCells[coords.getY()]++;
             haveToShiftLinesDown = tryDestroyLine(coords.getY()) || haveToShiftLinesDown;
         }
@@ -99,45 +97,45 @@ public class GameField {
             return false;
         }
         for (int x = 0; x < COUNT_CELLS_X; x++) {
-            field[x][y] = Color.WHITE;
+            field[x][y] = Block.EMPTY;
         }
         countFilledCells[y] = 0;
         return true;
     }
 
     private void shiftLinesDown() {
-        try {
-            int fallTo = getFirstEmptyLineId();
-            int fallFrom = getFirstNoEmptyLineId(fallTo);
+        int fallTo = getFirstEmptyLineId();
+        int fallFrom = getFirstNoEmptyLineId(fallTo);
+        while (fallTo != -1 && fallFrom != -1) {
             fallLinesDown(fallFrom, fallTo);
-        } catch (Exception ignored) {
-
+            fallTo = getFirstEmptyLineId();
+            fallFrom = getFirstNoEmptyLineId(fallTo);
         }
     }
 
-    private int getFirstEmptyLineId() throws Exception {
+    private int getFirstEmptyLineId() {
         for (int y = 0; y < COUNT_CELLS_Y; y++) {
             if (countFilledCells[y] == 0) {
                 return y;
             }
         }
-        throw new Exception();
+        return -1;
     }
 
-    private int getFirstNoEmptyLineId(int minId) throws Exception {
+    private int getFirstNoEmptyLineId(int minId) {
         for (int y = minId + 1; y < COUNT_CELLS_Y; y++) {
             if (countFilledCells[y] != 0) {
                 return y;
             }
         }
-        throw new Exception();
+        return -1;
     }
 
     private void fallLinesDown(int fallFrom, int fallTo) {
         for (int y = fallFrom; y < COUNT_CELLS_Y; y++) {
             for (int x = 0; x < COUNT_CELLS_X; x++) {
                 field[x][fallTo] = field[x][y];
-                field[x][y] = Color.WHITE;
+                field[x][y] = Block.EMPTY;
             }
             countFilledCells[fallTo] = countFilledCells[y];
             countFilledCells[y] = 0;

@@ -11,6 +11,6 @@
                 BorderPane.alignment="CENTER"/>
     </bottom>
     <center>
-        <Canvas fx:id="gameCanvas" height="400.0" width="200.0" BorderPane.alignment="CENTER"/>
+        <Canvas fx:id="gameCanvas" height="500" width="250" BorderPane.alignment="CENTER"/>
     </center>
 </BorderPane>
