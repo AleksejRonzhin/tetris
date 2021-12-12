@@ -1,18 +1,16 @@
 package ru.rsreu.tetris.game.input;
 
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import ru.rsreu.tetris.game.ShiftDirection;
 
-public class StageKeyboardHandleModule implements KeyboardHandleModule{
+public class SceneKeyboardHandleModule implements KeyboardHandleModule {
     Scene scene;
     private boolean wasEscPressed = false;
     private boolean wasRotateRequested = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private boolean wasBoostRequested = false;
 
-    public StageKeyboardHandleModule(Scene scene){
+    public SceneKeyboardHandleModule(Scene scene) {
         this.scene = scene;
     }
 
@@ -33,7 +31,7 @@ public class StageKeyboardHandleModule implements KeyboardHandleModule{
 
     @Override
     public boolean wasBoostRequested() {
-        return this.wasBoostRequested;
+        return wasBoostRequested;
     }
 
     @Override
@@ -47,22 +45,12 @@ public class StageKeyboardHandleModule implements KeyboardHandleModule{
     @Override
     public void update() {
         scene.setOnKeyPressed(event -> {
-            switch (event.getCode()){
-                case ESCAPE:
-                    wasEscPressed = true;
-                    break;
-                case A:
-                    shiftDirection = ShiftDirection.LEFT;
-                    break;
-                case D:
-                    shiftDirection = ShiftDirection.RIGHT;
-                    break;
-                case W:
-                    wasRotateRequested = true;
-                    break;
-                case S:
-                    wasBoostRequested = true;
-                    break;
+            switch (event.getCode()) {
+                case ESCAPE -> wasEscPressed = true;
+                case A, LEFT_PARENTHESIS -> shiftDirection = ShiftDirection.LEFT;
+                case D, RIGHT -> shiftDirection = ShiftDirection.RIGHT;
+                case W, UP -> wasRotateRequested = true;
+                case S, DOWN -> wasBoostRequested = true;
             }
         });
     }

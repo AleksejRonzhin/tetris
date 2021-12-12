@@ -15,7 +15,6 @@ public class GameField {
 
     public GameField() {
         spawnNewFigure();
-
         field = new Color[COUNT_CELLS_X][COUNT_CELLS_Y + OFFSET_TOP];
         countFilledCells = new int[COUNT_CELLS_Y + OFFSET_TOP];
         for (int x = 0; x < COUNT_CELLS_X; x++) {
@@ -23,10 +22,9 @@ public class GameField {
                 field[x][y] = Color.WHITE;
             }
         }
-        for (int y = 0; y < COUNT_CELLS_Y + OFFSET_TOP; y++){
+        for (int y = 0; y < COUNT_CELLS_Y + OFFSET_TOP; y++) {
             countFilledCells[y] = 0;
         }
-
     }
 
     public Color getColor(int x, int y) {
@@ -48,67 +46,52 @@ public class GameField {
 
     public void tryShiftFigure(ShiftDirection direction) {
         Coords[] shiftedCoords = figure.getShiftedCoords(direction);
-        boolean canShift = true;
+        if (isRightCoords(shiftedCoords)) {
+            figure.shift(direction);
+        }
+    }
+
+    private boolean isRightCoords(Coords[] shiftedCoords) {
         for (Coords coords : shiftedCoords) {
             int x = coords.getX();
             int y = coords.getY();
             if (x < 0 || x >= COUNT_CELLS_X
                     || y < 0 || y >= COUNT_CELLS_Y + OFFSET_TOP
                     || !isEmpty(x, y)) {
-                canShift = false;
+                return false;
             }
         }
-        if (canShift) {
-            figure.shift(direction);
-        }
+        return true;
     }
 
     public void tryRotateFigure() {
         Coords[] rotatedCoords = figure.getRotatedCoords();
-        boolean canRotate = true;
-        for (Coords coords : rotatedCoords) {
-            int x = coords.getX();
-            int y = coords.getY();
-            if (x < 0 || x >= COUNT_CELLS_X
-                    || y < 0 || y >= COUNT_CELLS_Y + OFFSET_TOP
-                    || !isEmpty(x, y)) {
-                canRotate = false;
-            }
-        }
-        if (canRotate) {
+        if (isRightCoords(rotatedCoords)) {
             figure.rotate();
         }
     }
 
     public void letFallDown() {
         Coords[] fallenCoords = figure.getFallenCoords();
-        boolean canFall = true;
-        for (Coords coords : fallenCoords) {
-            int x = coords.getX();
-            int y = coords.getY();
-            if (x < 0 || x >= COUNT_CELLS_X
-                    || y < 0 || y >= COUNT_CELLS_Y + OFFSET_TOP
-                    || !isEmpty(x, y)) {
-                canFall = false;
-            }
-        }
-        if (canFall) {
+        if (isRightCoords(fallenCoords)) {
             figure.fall();
         } else {
-            Coords[] figureCoords = figure.getCoords();
-            boolean haveToShiftLinesDown = false;
-            for (Coords coords : figureCoords) {
-                field[coords.getX()][coords.getY()] = figure.getColor();
-
-                countFilledCells[coords.getY()]++;
-
-                haveToShiftLinesDown = tryDestroyLine(coords.getY()) || haveToShiftLinesDown;
-            }
-            if (haveToShiftLinesDown) {
-                shiftLinesDown();
-            }
-            spawnNewFigure();
+            stopFigure();
         }
+    }
+
+    private void stopFigure() {
+        Coords[] figureCoords = figure.getCoords();
+        boolean haveToShiftLinesDown = false;
+        for (Coords coords : figureCoords) {
+            field[coords.getX()][coords.getY()] = figure.getColor();
+            countFilledCells[coords.getY()]++;
+            haveToShiftLinesDown = tryDestroyLine(coords.getY()) || haveToShiftLinesDown;
+        }
+        if (haveToShiftLinesDown) {
+            shiftLinesDown();
+        }
+        spawnNewFigure();
     }
 
     private boolean tryDestroyLine(int y) {
@@ -123,23 +106,42 @@ public class GameField {
     }
 
     private void shiftLinesDown() {
-        int fallTo = -1;
+        try {
+            int fallTo = getFirstEmptyLineId();
+            int fallFrom = getFirstNoEmptyLineId(fallTo);
+            fallLinesDown(fallFrom, fallTo);
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    private int getFirstEmptyLineId() throws Exception {
         for (int y = 0; y < COUNT_CELLS_Y; y++) {
-            if (fallTo == -1) {
-                if (countFilledCells[y] == 0) {
-                    fallTo = y;
-                }
-            } else {
-                if (countFilledCells[y] != 0) {
-                    for (int x = 0; x < COUNT_CELLS_X; x++) {
-                        field[x][fallTo] = field[x][y];
-                        field[x][y] = Color.WHITE;
-                    }
-                    countFilledCells[fallTo] = countFilledCells[y];
-                    countFilledCells[y] = 0;
-                }
-                fallTo++;
+            if (countFilledCells[y] == 0) {
+                return y;
             }
+        }
+        throw new Exception();
+    }
+
+    private int getFirstNoEmptyLineId(int minId) throws Exception {
+        for (int y = minId + 1; y < COUNT_CELLS_Y; y++) {
+            if (countFilledCells[y] != 0) {
+                return y;
+            }
+        }
+        throw new Exception();
+    }
+
+    private void fallLinesDown(int fallFrom, int fallTo) {
+        for (int y = fallFrom; y < COUNT_CELLS_Y; y++) {
+            for (int x = 0; x < COUNT_CELLS_X; x++) {
+                field[x][fallTo] = field[x][y];
+                field[x][y] = Color.WHITE;
+            }
+            countFilledCells[fallTo] = countFilledCells[y];
+            countFilledCells[y] = 0;
+            fallTo++;
         }
     }
 

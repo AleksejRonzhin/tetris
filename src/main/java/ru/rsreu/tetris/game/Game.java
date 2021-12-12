@@ -1,58 +1,53 @@
 package ru.rsreu.tetris.game;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import ru.rsreu.tetris.game.graphics.CanvasGraphicsModule;
 import ru.rsreu.tetris.game.graphics.GraphicsModule;
 import ru.rsreu.tetris.game.input.KeyboardHandleModule;
-import ru.rsreu.tetris.game.input.StageKeyboardHandleModule;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import ru.rsreu.tetris.game.input.SceneKeyboardHandleModule;
 
 public class Game {
     public static final int MOVE_DOWNS_PER_SECOND = 3;
     public static final int FPS = 60;
     public static final int FRAMES_PER_MOVE = FPS / MOVE_DOWNS_PER_SECOND;
-    public static final int BOOST_MULTIPLIER = 10;
+    public static final int BOOST_MULTIPLIER = 15;
     private final GraphicsModule graphicsModule;
-    private KeyboardHandleModule keyboardHandleModule;
+    private final KeyboardHandleModule keyboardHandleModule;
     private boolean isEnd = false;
-    private final GameField gameField = new GameField();
-    private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private boolean isRotate = false;
     private boolean isBoost = false;
+    private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private int loopNumber = 0;
+    private final GameField gameField = new GameField();
 
     public Game(Canvas canvas) {
         graphicsModule = new CanvasGraphicsModule(canvas);
-        keyboardHandleModule = new StageKeyboardHandleModule(canvas.getScene());
+        keyboardHandleModule = new SceneKeyboardHandleModule(canvas.getScene());
     }
 
     public void start() {
-        graphicsModule.draw(this.gameField);
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
+        AnimationTimer animationTimer = new AnimationTimer() {
             @Override
-            public void run() {
+            public void handle(long now) {
                 input();
                 logic();
                 graphicsModule.draw(gameField);
                 if(isEnd){
-                    timer.cancel();
+                    stop();
                 }
             }
         };
-        timer.schedule(task, 0, 10);
+        animationTimer.start();
+
     }
 
     private void input() {
         keyboardHandleModule.update();
-
         this.shiftDirection = keyboardHandleModule.getShiftDirection();
         this.isEnd = keyboardHandleModule.wasEscPressed();
         this.isRotate = keyboardHandleModule.wasRotateRequested();
         this.isBoost = keyboardHandleModule.wasBoostRequested();
-
         keyboardHandleModule.clean();
     }
 
@@ -68,7 +63,7 @@ public class Game {
         if ((loopNumber % (FRAMES_PER_MOVE / (isBoost ? BOOST_MULTIPLIER : 1)) == 0)) {
             gameField.letFallDown();
         }
-        loopNumber = (loopNumber+1)%(FRAMES_PER_MOVE);
+        loopNumber = (loopNumber+1)%FRAMES_PER_MOVE;
         this.isEnd = isEnd || gameField.isOverfilled();
     }
 }
