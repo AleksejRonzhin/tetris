@@ -4,44 +4,51 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Controller {
-    private Stage stage;
+    @FXML
+    public BorderPane bpMainMenu;
+    private final Stage stage;
+    private final Application application;
 
-
-    public Controller(Stage stage){
+    public Controller(Stage stage, Application application) {
         this.stage = stage;
+        this.application = application;
     }
 
     @FXML
-    public void btnStartOnAction(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
+    public void initialize(){
+        bpMainMenu.getStylesheets().add(application.getStylesheet());
+    }
+
+    @FXML
+    public void btnStartOnAction(ActionEvent actionEvent) throws Exception {
         URL location = Application.class.getResource("game.fxml");
-        FXMLLoader fxmlLoader = new FXMLLoader(location);
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setScene(scene);
-        this.stage.hide();
-        stage.showAndWait();
-        this.stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(location, application.getBundle());
+        fxmlLoader.setControllerFactory(param -> new GameController(application.getStylesheet()));
+        loadForm(fxmlLoader);
     }
 
     @FXML
-    public void btnSettingsOnAction(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", new Locale("en"));
+    public void btnSettingsOnAction(ActionEvent actionEvent) throws Exception {
         URL location = Application.class.getResource("settings.fxml");
-        FXMLLoader fxmlLoader = new FXMLLoader(location, bundle);
+        FXMLLoader fxmlLoader = new FXMLLoader(location, application.getBundle());
+        fxmlLoader.setControllerFactory(param -> new SettingController(application.getStylesheet(), application, stage));
+        loadForm(fxmlLoader);
+    }
+
+    public void loadForm(FXMLLoader fxmlLoader) throws Exception {
+        Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         this.stage.hide();
         stage.showAndWait();
-        this.stage.show();
+        application.stop();
+        application.start(stage);
     }
 }

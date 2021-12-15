@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import ru.rsreu.tetris.game.Game;
 
 public class GameController {
@@ -15,11 +16,24 @@ public class GameController {
     @FXML
     public Label lblScore;
     @FXML
+    public BorderPane bpMain;
+    @FXML
     private Button btnStart;
     @FXML
     private Canvas gameCanvas;
 
+    private final String stylesheet;
+
     private Game game;
+
+    public GameController(String stylesheet){
+        this.stylesheet = stylesheet;
+    }
+
+    @FXML
+    public void initialize(){
+        this.bpMain.getStylesheets().add(this.stylesheet);
+    }
 
     @FXML
     public void btnStartOnAction(ActionEvent actionEvent) {
