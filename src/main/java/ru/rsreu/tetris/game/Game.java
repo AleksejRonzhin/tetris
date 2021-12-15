@@ -19,7 +19,19 @@ public class Game {
     private boolean isBoost = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private int loopNumber = 0;
+    private int score = 0;
     private final GameField gameField = new GameField();
+    private final AnimationTimer animationTimer = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            input();
+            logic();
+            graphicsModule.drawGame(gameField);
+            if(isEnd){
+                end();
+            }
+        }
+    };
 
     public Game(Canvas canvas) {
         graphicsModule = new CanvasGraphicsModule(canvas);
@@ -27,19 +39,17 @@ public class Game {
     }
 
     public void start() {
-        AnimationTimer animationTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                input();
-                logic();
-                graphicsModule.draw(gameField);
-                if(isEnd){
-                    stop();
-                }
-            }
-        };
-        animationTimer.start();
+        this.animationTimer.start();
+    }
 
+    public void stop() {
+        this.animationTimer.stop();
+    }
+
+    public void end(){
+        stop();
+        int score = this.gameField.getScore();
+        this.graphicsModule.drawEndPanel(score);
     }
 
     private void input() {

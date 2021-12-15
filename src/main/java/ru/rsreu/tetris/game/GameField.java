@@ -10,6 +10,7 @@ public class GameField {
     private final Block[][] field;
     private final int[] countFilledCells;
     private Figure figure;
+    private int score;
 
     public GameField() {
         spawnNewFigure();
@@ -136,6 +137,7 @@ public class GameField {
             for (int x = 0; x < COUNT_CELLS_X; x++) {
                 field[x][fallTo] = field[x][y];
                 field[x][y] = Block.EMPTY;
+                this.score++;
             }
             countFilledCells[fallTo] = countFilledCells[y];
             countFilledCells[y] = 0;
@@ -150,5 +152,9 @@ public class GameField {
             }
         }
         return false;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 }

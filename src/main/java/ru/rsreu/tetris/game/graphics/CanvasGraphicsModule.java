@@ -20,10 +20,12 @@ public class CanvasGraphicsModule implements GraphicsModule {
     }
 
     @Override
-    public void draw(GameField field) {
+    public void drawGame(GameField field) {
         drawBackground();
         drawField(field);
         drawFigure(field.getFigure());
+        gc.setStroke(Color.BLACK);
+        gc.strokeText("Score:" + field.getScore(), 0, 50, canvas.getWidth());
     }
 
     private void drawBackground() {
@@ -49,5 +51,12 @@ public class CanvasGraphicsModule implements GraphicsModule {
         for (Coords coords : figure.getCoords()) {
             drawBlock(figure.getColor(), coords);
         }
+    }
+
+
+    @Override
+    public void drawEndPanel(int score) {
+        gc.setStroke(Color.BLACK);
+        gc.strokeText("End game. Score:" + score, 0, canvas.getHeight() / 2, canvas.getWidth());
     }
 }

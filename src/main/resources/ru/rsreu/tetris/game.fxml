@@ -3,12 +3,19 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.tetris.GameController">
+            prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.rsreu.tetris.GameController">
     <bottom>
-        <Button fx:id="btnStart" mnemonicParsing="false" onAction="#btnStartOnAction" text="Button"
-                BorderPane.alignment="CENTER"/>
+        <HBox>
+            <Button fx:id="btnStart" onAction="#btnStartOnAction" text="Начать игру"
+                    BorderPane.alignment="CENTER"/>
+            <Button fx:id="btnStop" onAction="#btnStopOnAction" text="Пауза"
+                    BorderPane.alignment="CENTER" visible="false"/>
+            <Button fx:id="btnContinue" onAction="#btnContinueOnAction" text="Продолжить"
+                    BorderPane.alignment="CENTER" visible="false"/>
+        </HBox>
     </bottom>
     <center>
         <Canvas fx:id="gameCanvas" height="500" width="250" BorderPane.alignment="CENTER"/>
