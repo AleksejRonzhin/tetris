@@ -55,8 +55,16 @@ public class CanvasGraphicsModule implements GraphicsModule {
 
 
     @Override
-    public void drawEndPanel(int score) {
+    public void drawEndPanel(GameField field) {
+        drawBackground();
+        for (int x = 0; x < GameField.COUNT_CELLS_X; x++) {
+            for (int y = 0; y < GameField.COUNT_CELLS_Y; y++) {
+                if(field.isNotEmpty(x, y)){
+                    drawBlock(Color.GREY, new Coords(x, y));
+                }
+            }
+        }
         gc.setStroke(Color.BLACK);
-        gc.strokeText("End game. Score:" + score, 0, canvas.getHeight() / 2, canvas.getWidth());
+        gc.strokeText("End game. Score:" + field.getScore(), 0, canvas.getHeight() / 2, canvas.getWidth());
     }
 }

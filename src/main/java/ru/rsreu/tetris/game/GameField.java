@@ -39,8 +39,8 @@ public class GameField {
         this.figure = new Figure(new Coords(randomX, COUNT_CELLS_Y + OFFSET_TOP - 1));
     }
 
-    public boolean isEmpty(int x, int y) {
-        return (field[x][y].equals(Block.EMPTY));
+    public boolean isNotEmpty(int x, int y) {
+        return (!field[x][y].equals(Block.EMPTY));
     }
 
     public void tryShiftFigure(ShiftDirection direction) {
@@ -56,7 +56,7 @@ public class GameField {
             int y = coords.getY();
             if (x < 0 || x >= COUNT_CELLS_X
                     || y < 0 || y >= COUNT_CELLS_Y + OFFSET_TOP
-                    || !isEmpty(x, y)) {
+                    || isNotEmpty(x, y)) {
                 return false;
             }
         }
@@ -101,6 +101,7 @@ public class GameField {
             field[x][y] = Block.EMPTY;
         }
         countFilledCells[y] = 0;
+        this.score += COUNT_CELLS_X;
         return true;
     }
 
@@ -137,7 +138,6 @@ public class GameField {
             for (int x = 0; x < COUNT_CELLS_X; x++) {
                 field[x][fallTo] = field[x][y];
                 field[x][y] = Block.EMPTY;
-                this.score++;
             }
             countFilledCells[fallTo] = countFilledCells[y];
             countFilledCells[y] = 0;
@@ -154,7 +154,8 @@ public class GameField {
         return false;
     }
 
-    public int getScore() {
+
+    public int getScore(){
         return this.score;
     }
 }

@@ -1,42 +1,44 @@
 package ru.rsreu.tetris.game;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import ru.rsreu.tetris.game.graphics.CanvasGraphicsModule;
 import ru.rsreu.tetris.game.graphics.GraphicsModule;
 import ru.rsreu.tetris.game.input.KeyboardHandleModule;
 import ru.rsreu.tetris.game.input.SceneKeyboardHandleModule;
 
-public class Game {
+public class Game extends Node {
     public static final int MOVE_DOWNS_PER_SECOND = 3;
     public static final int FPS = 60;
     public static final int FRAMES_PER_MOVE = FPS / MOVE_DOWNS_PER_SECOND;
     public static final int BOOST_MULTIPLIER = 15;
     private final GraphicsModule graphicsModule;
     private final KeyboardHandleModule keyboardHandleModule;
+    private final GameField gameField = new GameField();
     private boolean isEnd = false;
     private boolean isRotate = false;
     private boolean isBoost = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private int loopNumber = 0;
-    private int score = 0;
-    private final GameField gameField = new GameField();
-    private final AnimationTimer animationTimer = new AnimationTimer() {
+    private final Scene scene;
+    public Game(Canvas canvas) {
+        graphicsModule = new CanvasGraphicsModule(canvas);
+        this.scene = canvas.getScene();
+        keyboardHandleModule = new SceneKeyboardHandleModule(this.scene);
+    }    private final AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
             input();
             logic();
             graphicsModule.drawGame(gameField);
-            if(isEnd){
+            if (isEnd) {
                 end();
             }
         }
     };
-
-    public Game(Canvas canvas) {
-        graphicsModule = new CanvasGraphicsModule(canvas);
-        keyboardHandleModule = new SceneKeyboardHandleModule(canvas.getScene());
-    }
 
     public void start() {
         this.animationTimer.start();
@@ -46,10 +48,12 @@ public class Game {
         this.animationTimer.stop();
     }
 
-    public void end(){
+    public void end() {
         stop();
-        int score = this.gameField.getScore();
-        this.graphicsModule.drawEndPanel(score);
+        this.graphicsModule.drawEndPanel(gameField);
+        scene.lookup("#btnStart").setVisible(true);
+        scene.lookup("#btnStop").setVisible(false);
+        scene.lookup("#btnContinue").setVisible(false);
     }
 
     private void input() {
@@ -73,7 +77,14 @@ public class Game {
         if ((loopNumber % (FRAMES_PER_MOVE / (isBoost ? BOOST_MULTIPLIER : 1)) == 0)) {
             gameField.letFallDown();
         }
-        loopNumber = (loopNumber+1)%FRAMES_PER_MOVE;
+        loopNumber = (loopNumber + 1) % FRAMES_PER_MOVE;
         this.isEnd = isEnd || gameField.isOverfilled();
+        setScore();
+    }
+
+
+    private void setScore(){
+        Label label = (Label) scene.lookup("#lblScore");
+        label.setText("Score: " + this.gameField.getScore());
     }
 }

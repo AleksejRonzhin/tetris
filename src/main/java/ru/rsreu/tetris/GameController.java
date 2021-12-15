@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import ru.rsreu.tetris.game.Game;
 
 public class GameController {
@@ -11,6 +12,8 @@ public class GameController {
     public Button btnStop;
     @FXML
     public Button btnContinue;
+    @FXML
+    public Label lblScore;
     @FXML
     private Button btnStart;
     @FXML
