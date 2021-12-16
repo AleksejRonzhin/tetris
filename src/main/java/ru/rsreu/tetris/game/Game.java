@@ -10,6 +10,8 @@ import ru.rsreu.tetris.game.graphics.GraphicsModule;
 import ru.rsreu.tetris.game.input.KeyboardHandleModule;
 import ru.rsreu.tetris.game.input.SceneKeyboardHandleModule;
 
+import java.util.ResourceBundle;
+
 public class Game extends Node {
     public static final int MOVE_DOWNS_PER_SECOND = 3;
     public static final int FPS = 60;
@@ -18,17 +20,14 @@ public class Game extends Node {
     private final GraphicsModule graphicsModule;
     private final KeyboardHandleModule keyboardHandleModule;
     private final GameField gameField = new GameField();
+    private final Scene scene;
     private boolean isEnd = false;
     private boolean isRotate = false;
     private boolean isBoost = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private int loopNumber = 0;
-    private final Scene scene;
-    public Game(Canvas canvas) {
-        graphicsModule = new CanvasGraphicsModule(canvas);
-        this.scene = canvas.getScene();
-        keyboardHandleModule = new SceneKeyboardHandleModule(this.scene);
-    }    private final AnimationTimer animationTimer = new AnimationTimer() {
+    private final ResourceBundle bundle;
+    private final AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
             input();
@@ -39,6 +38,13 @@ public class Game extends Node {
             }
         }
     };
+
+    public Game(Canvas canvas, ResourceBundle bundle) {
+        graphicsModule = new CanvasGraphicsModule(canvas);
+        this.scene = canvas.getScene();
+        keyboardHandleModule = new SceneKeyboardHandleModule(this.scene);
+        this.bundle = bundle;
+    }
 
     public void start() {
         this.animationTimer.start();
@@ -82,9 +88,9 @@ public class Game extends Node {
         setScore();
     }
 
-
-    private void setScore(){
+    private void setScore() {
         Label label = (Label) scene.lookup("#lblScore");
-        label.setText("Score: " + this.gameField.getScore());
+        label.setText(bundle.getString("score") + ": " + this.gameField.getScore());
     }
+
 }

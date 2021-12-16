@@ -1,15 +1,14 @@
 package ru.rsreu.tetris;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import ru.rsreu.tetris.game.ColorBundle;
 import ru.rsreu.tetris.game.Game;
 
 public class GameController {
-    private final Application application;
     @FXML
     public Button btnStop;
     @FXML
@@ -22,6 +21,7 @@ public class GameController {
     private Button btnStart;
     @FXML
     private Canvas gameCanvas;
+    private final Application application;
     private Game game;
 
     public GameController(Application application) {
@@ -30,26 +30,28 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        this.bpMain.getStylesheets().add(application.getColorTheme().getPath());
+        ColorTheme theme = application.getColorTheme();
+        this.bpMain.getStylesheets().add(theme.getPath());
+        ColorBundle.setTheme(theme);
     }
 
     @FXML
-    public void btnStartOnAction(ActionEvent actionEvent) {
-        this.game = new Game(this.gameCanvas);
+    public void btnStartOnAction() {
+        this.game = new Game(this.gameCanvas, application.getBundle());
         this.game.start();
         this.btnStart.setVisible(false);
         this.btnStop.setVisible(true);
     }
 
     @FXML
-    public void btnStopOnAction(ActionEvent actionEvent) {
+    public void btnStopOnAction() {
         this.game.stop();
         this.btnStop.setVisible(false);
         this.btnContinue.setVisible(true);
     }
 
     @FXML
-    public void btnContinueOnAction(ActionEvent actionEvent) {
+    public void btnContinueOnAction() {
         this.game.start();
         this.btnStop.setVisible(true);
         this.btnContinue.setVisible(false);

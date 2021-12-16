@@ -109,7 +109,7 @@ public class GameField {
         int fallTo = getFirstEmptyLineId();
         int fallFrom = getFirstNoEmptyLineId(fallTo);
         while (fallTo != -1 && fallFrom != -1) {
-            fallLinesDown(fallFrom, fallTo);
+            fallLineDown(fallFrom, fallTo);
             fallTo = getFirstEmptyLineId();
             fallFrom = getFirstNoEmptyLineId(fallTo);
         }
@@ -133,16 +133,16 @@ public class GameField {
         return -1;
     }
 
-    private void fallLinesDown(int fallFrom, int fallTo) {
-        for (int y = fallFrom; y < COUNT_CELLS_Y; y++) {
+    private void fallLineDown(int fallFrom, int fallTo) {
+        //for (int y = fallFrom; y < COUNT_CELLS_Y; y++) {
             for (int x = 0; x < COUNT_CELLS_X; x++) {
-                field[x][fallTo] = field[x][y];
-                field[x][y] = Block.EMPTY;
+                field[x][fallTo] = field[x][fallFrom];
+                field[x][fallFrom] = Block.EMPTY;
             }
-            countFilledCells[fallTo] = countFilledCells[y];
-            countFilledCells[y] = 0;
-            fallTo++;
-        }
+            countFilledCells[fallTo] = countFilledCells[fallFrom];
+            countFilledCells[fallFrom] = 0;
+        //    fallTo++;
+        //}
     }
 
     public boolean isOverfilled() {
@@ -155,7 +155,7 @@ public class GameField {
     }
 
 
-    public int getScore(){
+    public int getScore() {
         return this.score;
     }
 }

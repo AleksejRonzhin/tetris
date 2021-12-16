@@ -3,6 +3,7 @@ package ru.rsreu.tetris.game.graphics;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import ru.rsreu.tetris.game.ColorBundle;
 import ru.rsreu.tetris.game.Coords;
 import ru.rsreu.tetris.game.Figure;
 import ru.rsreu.tetris.game.GameField;
@@ -24,12 +25,10 @@ public class CanvasGraphicsModule implements GraphicsModule {
         drawBackground();
         drawField(field);
         drawFigure(field.getFigure());
-        gc.setStroke(Color.BLACK);
-        gc.strokeText("Score:" + field.getScore(), 0, 50, canvas.getWidth());
     }
 
     private void drawBackground() {
-        gc.setFill(Color.WHITE);
+        gc.setFill(ColorBundle.getBackgroundColor());
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 

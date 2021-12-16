@@ -1,23 +1,34 @@
 package ru.rsreu.tetris;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public enum Language {
-    RU(new Locale("ru", "RU")),
-    EN(new Locale("en")),
-    DEFAULT(Locale.getDefault());
+    RU(new Locale("ru", "RU"), "russian"),
+    EN(new Locale("en"), "english"),
+    DEFAULT(Locale.getDefault(), "default");
 
     public static final Language[] languages = {RU, EN};
+    private static ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", DEFAULT.getLocale());
 
     private final Locale locale;
+    private final String text;
 
-    Language(Locale locale){
+    public static void updateBundle(Language language){
+        bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", language.getLocale());
+    }
+
+    Language(Locale locale, String text) {
         this.locale = locale;
+        this.text = text;
     }
 
     public Locale getLocale() {
         return locale;
+    }
+
+    @Override
+    public String toString() {
+        return bundle.getString(text);
     }
 }

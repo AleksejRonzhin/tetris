@@ -3,10 +3,10 @@ package ru.rsreu.tetris;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.rsreu.tetris.game.ColorBundle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Application extends javafx.application.Application {
@@ -22,6 +22,8 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         this.bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", language.getLocale());
+        Language.updateBundle(language);
+        ColorTheme.updateBundle(language);
         this.stage = stage;
 
         URL location = Application.class.getResource("main-menu.fxml");
