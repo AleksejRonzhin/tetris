@@ -10,17 +10,17 @@ public class Figure {
     private Coords metaCoords;
     private RotationMode currentRotation;
 
-    public Figure(Coords metaCoords, RotationMode currentRotation, FigureForm form) {
+    public Figure(Coords metaCoords, RotationMode currentRotation, FigureForm form, ColorBundle colorBundle) {
         this.metaCoords = metaCoords;
         this.currentRotation = currentRotation;
         this.form = form;
 
-        Color[] colors = ColorBundle.getColors();
+        Color[] colors = colorBundle.getColors();
         this.color = colors[new Random().nextInt(colors.length)];
     }
 
-    public Figure(Coords metaCoords) {
-        this(metaCoords, RotationMode.NORMAL, FigureForm.getRandomForm());
+    public Figure(Coords metaCoords, ColorBundle colorBundle) {
+        this(metaCoords, RotationMode.NORMAL, FigureForm.getRandomForm(), colorBundle);
     }
 
     public Color getColor() {

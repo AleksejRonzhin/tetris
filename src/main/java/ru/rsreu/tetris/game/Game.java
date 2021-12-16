@@ -19,7 +19,7 @@ public class Game extends Node {
     public static final int BOOST_MULTIPLIER = 15;
     private final GraphicsModule graphicsModule;
     private final KeyboardHandleModule keyboardHandleModule;
-    private final GameField gameField = new GameField();
+    private final GameField gameField;
     private final Scene scene;
     private boolean isEnd = false;
     private boolean isRotate = false;
@@ -39,11 +39,12 @@ public class Game extends Node {
         }
     };
 
-    public Game(Canvas canvas, ResourceBundle bundle) {
-        graphicsModule = new CanvasGraphicsModule(canvas);
+    public Game(Canvas canvas, ResourceBundle bundle, ColorBundle colorBundle) {
+        graphicsModule = new CanvasGraphicsModule(canvas, colorBundle);
         this.scene = canvas.getScene();
         keyboardHandleModule = new SceneKeyboardHandleModule(this.scene);
         this.bundle = bundle;
+        gameField = new GameField(colorBundle);
     }
 
     public void start() {

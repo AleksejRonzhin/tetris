@@ -13,9 +13,11 @@ public class CanvasGraphicsModule implements GraphicsModule {
     private final int size;
     private final Canvas canvas;
     private final GraphicsContext gc;
+    private final ColorBundle colorBundle;
 
-    public CanvasGraphicsModule(Canvas canvas) {
+    public CanvasGraphicsModule(Canvas canvas, ColorBundle colorBundle) {
         this.canvas = canvas;
+        this.colorBundle = colorBundle;
         gc = canvas.getGraphicsContext2D();
         size = (int) (canvas.getHeight() / GameField.COUNT_CELLS_Y);
     }
@@ -28,7 +30,7 @@ public class CanvasGraphicsModule implements GraphicsModule {
     }
 
     private void drawBackground() {
-        gc.setFill(ColorBundle.getBackgroundColor());
+        gc.setFill(this.colorBundle.getBackgroundColor());
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 

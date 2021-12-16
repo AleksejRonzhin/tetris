@@ -32,12 +32,11 @@ public class GameController {
     public void initialize() {
         ColorTheme theme = application.getColorTheme();
         this.bpMain.getStylesheets().add(theme.getPath());
-        ColorBundle.setTheme(theme);
     }
 
     @FXML
     public void btnStartOnAction() {
-        this.game = new Game(this.gameCanvas, application.getBundle());
+        this.game = new Game(this.gameCanvas, application.getBundle(), new ColorBundle(application.getColorTheme()));
         this.game.start();
         this.btnStart.setVisible(false);
         this.btnStop.setVisible(true);

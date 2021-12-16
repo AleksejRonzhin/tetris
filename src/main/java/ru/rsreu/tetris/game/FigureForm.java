@@ -2,7 +2,6 @@ package ru.rsreu.tetris.game;
 
 import java.util.Random;
 
-
 public enum FigureForm {
     I_FORM(CoordsMask.I_FORM),
     O_FORM(CoordsMask.O_FORM),

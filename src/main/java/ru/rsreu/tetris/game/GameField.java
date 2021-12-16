@@ -11,8 +11,10 @@ public class GameField {
     private final int[] countFilledCells;
     private Figure figure;
     private int score;
+    private final ColorBundle colorBundle;
 
-    public GameField() {
+    public GameField(ColorBundle colorBundle) {
+        this.colorBundle = colorBundle;
         spawnNewFigure();
         field = new Block[COUNT_CELLS_X][COUNT_CELLS_Y + OFFSET_TOP];
         countFilledCells = new int[COUNT_CELLS_Y + OFFSET_TOP];
@@ -36,7 +38,7 @@ public class GameField {
 
     private void spawnNewFigure() {
         int randomX = new Random().nextInt(COUNT_CELLS_X - 4);
-        this.figure = new Figure(new Coords(randomX, COUNT_CELLS_Y + OFFSET_TOP - 1));
+        this.figure = new Figure(new Coords(randomX, COUNT_CELLS_Y + OFFSET_TOP - 1), this.colorBundle);
     }
 
     public boolean isNotEmpty(int x, int y) {
