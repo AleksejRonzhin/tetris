@@ -2,9 +2,7 @@ package ru.rsreu.tetris;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,17 +10,24 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Application extends javafx.application.Application {
-    private String stylesheet = "ru/rsreu/tetris/stylesheet.css";
-    private ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", Locale.getDefault());
+    private ColorTheme colorTheme = ColorTheme.LIGHT;
+    private Language language = Language.DEFAULT;
+    private ResourceBundle bundle;
+    private Stage stage;
+
+    public static void main(String[] args) {
+        launch();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
+        this.bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", language.getLocale());
+        this.stage = stage;
 
         URL location = Application.class.getResource("main-menu.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location, bundle);
-        fxmlLoader.setControllerFactory(param -> new Controller(stage, this));
+        fxmlLoader.setControllerFactory(param -> new Controller(this));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }
@@ -31,19 +36,23 @@ public class Application extends javafx.application.Application {
         return bundle;
     }
 
-    public String getStylesheet() {
-        return stylesheet;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setStylesheet(String stylesheet) {
-        this.stylesheet = stylesheet;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
+    public ColorTheme getColorTheme() {
+        return colorTheme;
     }
 
-    public static void main(String[] args) {
-        launch();
+    public void setColorTheme(ColorTheme colorTheme) {
+        this.colorTheme = colorTheme;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

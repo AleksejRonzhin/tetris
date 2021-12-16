@@ -10,11 +10,11 @@
             fx:controller="ru.rsreu.tetris.GameController">
     <bottom>
         <HBox>
-            <Button fx:id="btnStart" onAction="#btnStartOnAction" text="Начать игру"
+            <Button fx:id="btnStart" onAction="#btnStartOnAction" text="%begin"
                     BorderPane.alignment="CENTER"/>
-            <Button fx:id="btnStop" onAction="#btnStopOnAction" text="Пауза"
+            <Button fx:id="btnStop" onAction="#btnStopOnAction" text="%pause"
                     BorderPane.alignment="CENTER" visible="false"/>
-            <Button fx:id="btnContinue" onAction="#btnContinueOnAction" text="Продолжить"
+            <Button fx:id="btnContinue" onAction="#btnContinueOnAction" text="%continue"
                     BorderPane.alignment="CENTER" visible="false"/>
         </HBox>
     </bottom>

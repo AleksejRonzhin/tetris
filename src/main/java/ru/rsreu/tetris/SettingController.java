@@ -1,36 +1,50 @@
 package ru.rsreu.tetris;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class SettingController {
-
-    private final String stylesheet;
-    private Application application;
-    private Stage stage;
+    private final Application application;
     @FXML
     public BorderPane bpSettings;
+    @FXML
+    public Button btnSettingsSave;
+    @FXML
+    public Button btnSettingsCancel;
+    @FXML
+    public ChoiceBox<ColorTheme> colorThemeChoiceBox;
+    @FXML
+    public ChoiceBox<Language> languageChoiceBox;
 
-    public SettingController(String stylesheet, Application application, Stage stage) {
-        this.stylesheet = stylesheet;
+    public SettingController(Application application) {
         this.application = application;
-        this.stage = stage;
     }
 
     @FXML
     public void initialize() {
-        this.bpSettings.getStylesheets().add(this.stylesheet);
+        ColorTheme theme = application.getColorTheme();
+        this.bpSettings.getStylesheets().add(theme.getPath());
+        colorThemeChoiceBox.setValue(theme);
+        colorThemeChoiceBox.getItems().addAll(ColorTheme.themes);
+        languageChoiceBox.setValue(application.getLanguage());
+        languageChoiceBox.getItems().addAll(Language.languages);
     }
 
-    public void btnOnAction(ActionEvent actionEvent) {
-        this.application.setStylesheet("ru/rsreu/tetris/stylesheet.css");
+    public void btnSaveOnAction() {
+        application.setColorTheme(colorThemeChoiceBox.getValue());
+        application.setLanguage(languageChoiceBox.getValue());
+        closeStage();
     }
 
-    public void btnDarkOnAction(ActionEvent actionEvent) {
-        this.application.setStylesheet("ru/rsreu/tetris/dark_stylesheet.css");
+    public void btnCancelOnAction() {
+        closeStage();
+    }
+
+    private void closeStage() {
+        Stage stage = (Stage) btnSettingsCancel.getScene().getWindow();
+        stage.close();
     }
 }

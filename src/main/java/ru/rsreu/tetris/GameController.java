@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import ru.rsreu.tetris.game.Game;
 
 public class GameController {
+    private final Application application;
     @FXML
     public Button btnStop;
     @FXML
@@ -21,18 +22,15 @@ public class GameController {
     private Button btnStart;
     @FXML
     private Canvas gameCanvas;
-
-    private final String stylesheet;
-
     private Game game;
 
-    public GameController(String stylesheet){
-        this.stylesheet = stylesheet;
+    public GameController(Application application) {
+        this.application = application;
     }
 
     @FXML
-    public void initialize(){
-        this.bpMain.getStylesheets().add(this.stylesheet);
+    public void initialize() {
+        this.bpMain.getStylesheets().add(application.getColorTheme().getPath());
     }
 
     @FXML

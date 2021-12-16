@@ -13,24 +13,22 @@ import java.net.URL;
 public class Controller {
     @FXML
     public BorderPane bpMainMenu;
-    private final Stage stage;
     private final Application application;
 
-    public Controller(Stage stage, Application application) {
-        this.stage = stage;
+    public Controller(Application application) {
         this.application = application;
     }
 
     @FXML
     public void initialize(){
-        bpMainMenu.getStylesheets().add(application.getStylesheet());
+        bpMainMenu.getStylesheets().add(application.getColorTheme().getPath());
     }
 
     @FXML
     public void btnStartOnAction(ActionEvent actionEvent) throws Exception {
         URL location = Application.class.getResource("game.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location, application.getBundle());
-        fxmlLoader.setControllerFactory(param -> new GameController(application.getStylesheet()));
+        fxmlLoader.setControllerFactory(param -> new GameController(application));
         loadForm(fxmlLoader);
     }
 
@@ -38,7 +36,7 @@ public class Controller {
     public void btnSettingsOnAction(ActionEvent actionEvent) throws Exception {
         URL location = Application.class.getResource("settings.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location, application.getBundle());
-        fxmlLoader.setControllerFactory(param -> new SettingController(application.getStylesheet(), application, stage));
+        fxmlLoader.setControllerFactory(param -> new SettingController(application));
         loadForm(fxmlLoader);
     }
 
@@ -46,7 +44,7 @@ public class Controller {
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        this.stage.hide();
+        application.getStage().hide();
         stage.showAndWait();
         application.stop();
         application.start(stage);
