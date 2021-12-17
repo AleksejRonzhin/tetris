@@ -1,2 +1,46 @@
-.button {-fx-background-color: yellow}
-#bpMain {-fx-background-color: gray}
+.label {
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: #f07167;
+    -fx-font-size: 14;
+}
+
+.button {
+    -fx-background-color: #00afb9;
+    -fx-text-fill:  #fdfcdc;
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-font-size: 20;
+    -fx-background-radius: 2.5em;
+    -fx-pref-width: 200;
+    -fx-pref-height: 70;
+}
+
+.choice-box {
+    -fx-background-color: #fdfcdc;
+    -fx-border-color: #f07167;
+    -fx-border-radius: 2.5em;
+    -fx-pref-width: 250;
+    -fx-pref-height: 50;
+    -fx-font-size: 20;
+}
+
+.choice-box .label {
+    -fx-text-fill: #f07167;
+}
+
+.choice-box .button {
+    -fx-background-color: BLUE;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #fdfcdc;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #D8E7E8;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: Black;
+}
+
+.borderPane {-fx-background-color: #fdfcdc}

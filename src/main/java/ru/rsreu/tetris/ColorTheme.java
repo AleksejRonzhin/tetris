@@ -1,11 +1,12 @@
 package ru.rsreu.tetris;
 
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
 
 import java.util.ResourceBundle;
 
 public enum ColorTheme {
-    LIGHT("ru/rsreu/tetris/stylesheet.css", "light", new Color[]{Color.RED, Color.PURPLE, Color.GREEN, Color.BLUE}, Color.WHITE),
+    LIGHT("ru/rsreu/tetris/stylesheet.css", "light", new Color[]{Color.RED, Color.PURPLE, Color.GREEN, Color.BLUE}, Color.web("#fdfcdc")),
     DARK("ru/rsreu/tetris/dark_stylesheet.css", "dark", new Color[]{Color.LIGHTBLUE, Color.PINK, Color.ORANGE}, Color.BLACK);
 
     public static ColorTheme[] themes = {LIGHT, DARK};

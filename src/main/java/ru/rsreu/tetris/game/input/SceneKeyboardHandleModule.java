@@ -47,7 +47,7 @@ public class SceneKeyboardHandleModule implements KeyboardHandleModule {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case ESCAPE -> wasEscPressed = true;
-                case A, LEFT_PARENTHESIS -> shiftDirection = ShiftDirection.LEFT;
+                case A, LEFT -> shiftDirection = ShiftDirection.LEFT;
                 case D, RIGHT -> shiftDirection = ShiftDirection.RIGHT;
                 case W, UP -> wasRotateRequested = true;
                 case S, DOWN -> wasBoostRequested = true;
