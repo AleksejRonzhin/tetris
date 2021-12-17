@@ -38,7 +38,7 @@ public class GameController {
     public void btnStartOnAction() {
         this.game = new Game(this.gameCanvas, application.getBundle(), new ColorBundle(application.getColorTheme()));
         this.game.start();
-        this.btnStart.setVisible(false);
+        this.btnStart.setDisable(true);
         this.btnStop.setVisible(true);
     }
 

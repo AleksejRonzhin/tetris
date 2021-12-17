@@ -3,27 +3,26 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
-<BorderPane fx:id="bpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+<?import javafx.scene.layout.*?>
+<BorderPane fx:id="bpMain" styleClass="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="600.0"
             prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.rsreu.tetris.GameController">
     <bottom>
-        <HBox>
+        <HBox BorderPane.alignment="CENTER" spacing="20">
             <Button fx:id="btnStart" onAction="#btnStartOnAction" text="%begin"
-                    BorderPane.alignment="CENTER"/>
+                    BorderPane.alignment="CENTER" styleClass="gameButton"/>
             <Button fx:id="btnStop" onAction="#btnStopOnAction" text="%pause"
-                    BorderPane.alignment="CENTER" visible="false"/>
+                    BorderPane.alignment="CENTER" visible="false" styleClass="gameButton"/>
             <Button fx:id="btnContinue" onAction="#btnContinueOnAction" text="%continue"
-                    BorderPane.alignment="CENTER" visible="false"/>
+                    BorderPane.alignment="CENTER" visible="false" styleClass="gameButton"/>
         </HBox>
     </bottom>
     <center>
-        <Canvas fx:id="gameCanvas" height="500" width="250" BorderPane.alignment="CENTER"/>
+        <Canvas fx:id="gameCanvas" height="500" width="250" StackPane.alignment="CENTER"/>
     </center>
-    <right>
-        <VBox>
-            <Label fx:id="lblScore"/>
-        </VBox>
-    </right>
+    <top>
+        <Label fx:id="lblScore" BorderPane.alignment="TOP_CENTER"/>
+    </top>
 </BorderPane>

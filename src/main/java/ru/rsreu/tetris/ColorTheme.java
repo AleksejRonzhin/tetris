@@ -1,13 +1,16 @@
 package ru.rsreu.tetris;
 
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
 
 import java.util.ResourceBundle;
 
 public enum ColorTheme {
-    LIGHT("ru/rsreu/tetris/stylesheet.css", "light", new Color[]{Color.RED, Color.PURPLE, Color.GREEN, Color.BLUE}, Color.web("#fdfcdc")),
-    DARK("ru/rsreu/tetris/dark_stylesheet.css", "dark", new Color[]{Color.LIGHTBLUE, Color.PINK, Color.ORANGE}, Color.BLACK);
+    LIGHT("ru/rsreu/tetris/stylesheet.css", "light",
+            new Color[]{Color.web("#605BF0"), Color.web("#4FF091"), Color.web("#F05A4F"), Color.web("#F0DD7F")},
+            Color.web("#fdfcdc"), Color.web("#f07167")),
+    DARK("ru/rsreu/tetris/dark_stylesheet.css", "dark",
+            new Color[]{Color.LIGHTBLUE, Color.PINK, Color.ORANGE},
+            Color.BLACK, Color.WHITE);
 
     public static ColorTheme[] themes = {LIGHT, DARK};
     private static ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", Language.DEFAULT.getLocale());
@@ -15,12 +18,14 @@ public enum ColorTheme {
     String text;
     Color[] figuresColors;
     Color backgroundColor;
+    Color textColor;
 
-    ColorTheme(String path, String text, Color[] figuresColors, Color backgroundColor) {
+    ColorTheme(String path, String text, Color[] figuresColors, Color backgroundColor, Color textColor) {
         this.path = path;
         this.text = text;
         this.figuresColors = figuresColors;
         this.backgroundColor = backgroundColor;
+        this.textColor = textColor;
     }
 
     public static void updateBundle(Language language) {
@@ -37,6 +42,10 @@ public enum ColorTheme {
 
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+
+    public Color getTextColor() {
+        return textColor;
     }
 
     @Override

@@ -1,7 +1,9 @@
+.borderPane {-fx-background-color: #fdfcdc }
+
 .label {
     -fx-font-family: "Franklin Gothic Medium";
     -fx-text-fill: #f07167;
-    -fx-font-size: 14;
+    -fx-font-size: 18;
 }
 
 .button {
@@ -20,15 +22,11 @@
     -fx-border-radius: 2.5em;
     -fx-pref-width: 250;
     -fx-pref-height: 50;
-    -fx-font-size: 20;
+    -fx-font-size: 18;
 }
 
 .choice-box .label {
     -fx-text-fill: #f07167;
-}
-
-.choice-box .button {
-    -fx-background-color: BLUE;
 }
 
 .choice-box .context-menu {
@@ -36,11 +34,15 @@
 }
 
 .choice-box .menu-item:focused {
-    -fx-background-color: #D8E7E8;
+    -fx-background-color: #f07167;
 }
 
 .choice-box .menu-item:focused > .label {
-    -fx-text-fill: Black;
+    -fx-text-fill: #fdfcdc;
 }
 
-.borderPane {-fx-background-color: #fdfcdc}
+.gameButton {
+    -fx-pref-width: 200;
+    -fx-pref-height: 50;
+    -fx-font-size: 15;
+}

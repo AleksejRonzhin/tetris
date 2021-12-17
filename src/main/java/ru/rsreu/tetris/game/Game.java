@@ -58,7 +58,7 @@ public class Game extends Node {
     public void end() {
         stop();
         this.graphicsModule.drawEndPanel(gameField);
-        scene.lookup("#btnStart").setVisible(true);
+        scene.lookup("#btnStart").setDisable(false);
         scene.lookup("#btnStop").setVisible(false);
         scene.lookup("#btnContinue").setVisible(false);
     }
