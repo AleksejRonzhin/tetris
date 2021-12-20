@@ -10,7 +10,7 @@ public enum ColorTheme {
             Color.web("#fdfcdc"), Color.web("#f07167")),
     DARK("ru/rsreu/tetris/dark_stylesheet.css", "dark",
             new Color[]{Color.LIGHTBLUE, Color.PINK, Color.ORANGE},
-            Color.BLACK, Color.WHITE);
+            Color.web("#261C2C"), Color.web("#6E85B2"));
 
     public static ColorTheme[] themes = {LIGHT, DARK};
     private static ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", Language.DEFAULT.getLocale());
