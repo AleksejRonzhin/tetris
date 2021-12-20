@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane fx:id="bpMain" styleClass="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ru.rsreu.tetris.GameController">
+<BorderPane fx:id="bpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="420.0" styleClass="borderPane" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.tetris.GameController">
+
     <bottom>
-        <HBox BorderPane.alignment="CENTER" spacing="20">
-            <Button fx:id="btnStart" onAction="#btnStartOnAction" text="%begin"
-                    BorderPane.alignment="CENTER" styleClass="gameButton"/>
-            <Button fx:id="btnStop" onAction="#btnStopOnAction" text="%pause"
-                    BorderPane.alignment="CENTER" visible="false" styleClass="gameButton"/>
-            <Button fx:id="btnContinue" onAction="#btnContinueOnAction" text="%continue"
-                    BorderPane.alignment="CENTER" visible="false" styleClass="gameButton"/>
+        <HBox spacing="20" BorderPane.alignment="CENTER">
+            <Button fx:id="btnStart" onAction="#btnStartOnAction" styleClass="gameButton" text="%begin"
+                    BorderPane.alignment="CENTER"/>
+            <Button fx:id="btnStop" onAction="#btnStopOnAction" styleClass="gameButton" text="%pause" visible="false"
+                    BorderPane.alignment="CENTER"/>
+            <Button fx:id="btnContinue" onAction="#btnContinueOnAction" styleClass="gameButton" text="%continue"
+                    visible="false" BorderPane.alignment="CENTER"/>
         </HBox>
     </bottom>
     <center>
         <Canvas fx:id="gameCanvas" height="500" width="250" StackPane.alignment="CENTER"/>
     </center>
+    <right>
+        <VBox>
+            <Label text="Next figure:"/>
+            <Canvas fx:id="nextFigure" height="100" width="100"/>
+            <Label text="Stash figure:"/>
+            <Canvas fx:id="stashFigure" height="100" width="100"/>
+        </VBox>
+    </right>
     <top>
         <Label fx:id="lblScore" BorderPane.alignment="TOP_CENTER"/>
     </top>
+    <left>
+        <Button fx:id="btnEnd" onAction="#btnEndOnAction" BorderPane.alignment="TOP_CENTER" text="%back"
+                style="-fx-font-size: 14; -fx-pref-height: 20; -fx-pref-width: 60"/>
+    </left>
 </BorderPane>

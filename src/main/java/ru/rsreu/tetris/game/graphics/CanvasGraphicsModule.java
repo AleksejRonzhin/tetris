@@ -3,21 +3,22 @@ package ru.rsreu.tetris.game.graphics;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import ru.rsreu.tetris.game.ColorBundle;
-import ru.rsreu.tetris.game.Coords;
-import ru.rsreu.tetris.game.Figure;
-import ru.rsreu.tetris.game.GameField;
+import ru.rsreu.tetris.game.*;
 
 public class CanvasGraphicsModule implements GraphicsModule {
 
     private final int size;
     private final Canvas canvas;
+    private final Canvas nextFigure;
+    private final Canvas stashFigure;
     private final GraphicsContext gc;
     private final ColorBundle colorBundle;
     private final int borderSize = 5;
 
-    public CanvasGraphicsModule(Canvas canvas, ColorBundle colorBundle) {
+    public CanvasGraphicsModule(Canvas canvas, Canvas nextFigure, Canvas stashFigure, ColorBundle colorBundle) {
         this.canvas = canvas;
+        this.nextFigure = nextFigure;
+        this.stashFigure = stashFigure;
         this.colorBundle = colorBundle;
         gc = canvas.getGraphicsContext2D();
         size = (int) ((canvas.getHeight() - 2 * borderSize) / GameField.COUNT_CELLS_Y);
@@ -28,6 +29,32 @@ public class CanvasGraphicsModule implements GraphicsModule {
         drawBackground();
         drawField(field);
         drawFigure(field.getFigure());
+        drawNextFigure(field.getFigure());
+        drawStashFigure(field.getFigure());
+    }
+
+    public void drawNextFigure(Figure figure) {
+        GraphicsContext gc = this.nextFigure.getGraphicsContext2D();
+        Color color = figure.getColor();
+        gc.setFill(this.colorBundle.getBackgroundColor());
+        gc.fillRect(0, 0, 100, 100);
+        gc.setFill(color);
+        for(Coords coords: figure.getForm().getMask().generateFigure(new Coords(0, 0), RotationMode.NORMAL)){
+            gc.fillRect( coords.getX() * size + 1.5,
+                    (-coords.getY()) * size + 1.5, size - 3, size - 3);
+        }
+    }
+
+    public void drawStashFigure(Figure figure) {
+        GraphicsContext gc = this.stashFigure.getGraphicsContext2D();
+        Color color = figure.getColor();
+        gc.setFill(this.colorBundle.getBackgroundColor());
+        gc.fillRect(0, 0, 100, 100);
+        gc.setFill(color);
+        for(Coords coords: figure.getForm().getMask().generateFigure(new Coords(0, 0), RotationMode.NORMAL)){
+            gc.fillRect( coords.getX() * size + 1.5,
+                    (-coords.getY()) * size + 1.5, size - 3, size - 3);
+        }
     }
 
     private void drawBackground() {

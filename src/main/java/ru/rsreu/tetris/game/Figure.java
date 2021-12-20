@@ -27,6 +27,10 @@ public class Figure {
         return this.color;
     }
 
+    public FigureForm getForm() {
+        return form;
+    }
+
     public Coords[] getCoords() {
         return form.getMask().generateFigure(metaCoords, currentRotation);
     }

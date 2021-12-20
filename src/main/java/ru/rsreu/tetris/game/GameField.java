@@ -136,15 +136,12 @@ public class GameField {
     }
 
     private void fallLineDown(int fallFrom, int fallTo) {
-        //for (int y = fallFrom; y < COUNT_CELLS_Y; y++) {
             for (int x = 0; x < COUNT_CELLS_X; x++) {
                 field[x][fallTo] = field[x][fallFrom];
                 field[x][fallFrom] = Block.EMPTY;
             }
             countFilledCells[fallTo] = countFilledCells[fallFrom];
             countFilledCells[fallFrom] = 0;
-        //    fallTo++;
-        //}
     }
 
     public boolean isOverfilled() {

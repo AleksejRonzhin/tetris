@@ -39,8 +39,8 @@ public class Game extends Node {
         }
     };
 
-    public Game(Canvas canvas, ResourceBundle bundle, ColorBundle colorBundle) {
-        graphicsModule = new CanvasGraphicsModule(canvas, colorBundle);
+    public Game(Canvas canvas, Canvas nextFigure, Canvas stashFigure, ResourceBundle bundle, ColorBundle colorBundle) {
+        graphicsModule = new CanvasGraphicsModule(canvas, nextFigure, stashFigure, colorBundle);
         this.scene = canvas.getScene();
         keyboardHandleModule = new SceneKeyboardHandleModule(this.scene);
         this.bundle = bundle;

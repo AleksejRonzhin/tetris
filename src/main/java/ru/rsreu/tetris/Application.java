@@ -2,7 +2,9 @@ package ru.rsreu.tetris;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ru.rsreu.tetris.game.ColorBundle;
 
 import java.io.IOException;
@@ -13,7 +15,7 @@ public class Application extends javafx.application.Application {
     private ColorTheme colorTheme = ColorTheme.LIGHT;
     private Language language = Language.DEFAULT;
     private ResourceBundle bundle;
-    private Stage stage;
+    private Stage stage = null;
 
     public static void main(String[] args) {
         launch();
@@ -25,7 +27,7 @@ public class Application extends javafx.application.Application {
         Language.updateBundle(language);
         ColorTheme.updateBundle(language);
         this.stage = stage;
-
+        stage.getIcons().add(new Image("https://cdn-icons.flaticon.com/png/512/2281/premium/2281729.png?token=exp=1640022582~hmac=22d4ae3c4beeb73048da87789b8fa5bc"));
         URL location = Application.class.getResource("main-menu.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location, bundle);
         fxmlLoader.setControllerFactory(param -> new Controller(this));
