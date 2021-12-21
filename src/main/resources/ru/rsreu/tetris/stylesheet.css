@@ -46,3 +46,20 @@
     -fx-pref-height: 50;
     -fx-font-size: 15;
 }
+
+.slider .track{
+    -fx-border-color: #f07167;
+    -fx-background-color: #fdfcdc;
+    -fx-pref-height: 20;
+}
+
+.slider .thumb{
+    -fx-border-color: #f07167;
+    -fx-background-color: #fdfcdc;
+    -fx-border-radius: 2.5em;
+    -fx-pref-width: 30;
+}
+
+.slider .thumb:pressed {
+    -fx-background-color: #f07167;
+}

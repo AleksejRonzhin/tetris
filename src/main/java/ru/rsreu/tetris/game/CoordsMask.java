@@ -35,7 +35,7 @@ public enum CoordsMask {
                 realCoords[3] = new Coords(x + 1, y);
                 return realCoords;
             },
-            new Coords[]{new Coords(2, 2), new Coords(2, 3), new Coords(3, 3), new Coords(3, 2) }
+            new Coords[]{new Coords(2, 2), new Coords(2, 3), new Coords(3, 3), new Coords(3, 2)}
     ),
     T_FORM(
             (coords, rotation) -> {
@@ -163,7 +163,7 @@ public enum CoordsMask {
                 }
                 return realCoords;
             },
-            new Coords[]{new Coords(2, 3), new Coords(3, 3), new Coords(3, 2), new Coords(4, 2)}
+            new Coords[]{new Coords(2, 2), new Coords(3, 2), new Coords(3, 3), new Coords(4, 3)}
     ),
     Z_FORM(
             (coords, rotation) -> {
@@ -186,7 +186,7 @@ public enum CoordsMask {
                 }
                 return realCoords;
             },
-            new Coords[]{new Coords(2, 2), new Coords(3, 2), new Coords(3, 3), new Coords(4, 3)}
+            new Coords[]{new Coords(2, 3), new Coords(3, 3), new Coords(3, 2), new Coords(4, 2)}
     );
 
     private final Generation generation;

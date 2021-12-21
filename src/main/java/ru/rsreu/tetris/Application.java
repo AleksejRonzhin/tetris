@@ -3,10 +3,13 @@ package ru.rsreu.tetris;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ru.rsreu.tetris.game.ColorBundle;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +19,7 @@ public class Application extends javafx.application.Application {
     private Language language = Language.DEFAULT;
     private ResourceBundle bundle;
     private Stage stage = null;
+    private MediaPlayer player = null;
 
     public static void main(String[] args) {
         launch();
@@ -23,6 +27,15 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        if(player == null){
+            Media media = new Media(new
+                    File("src/main/resources/ru/rsreu/tetris/music/music.mp3").toURI().toString());
+            this.player = new MediaPlayer(media);
+            player.setVolume(0.2);
+            player.setCycleCount(0);
+            player.play();
+        }
+
         this.bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", language.getLocale());
         Language.updateBundle(language);
         ColorTheme.updateBundle(language);
@@ -34,6 +47,10 @@ public class Application extends javafx.application.Application {
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public MediaPlayer getPlayer() {
+        return player;
     }
 
     public ResourceBundle getBundle() {
