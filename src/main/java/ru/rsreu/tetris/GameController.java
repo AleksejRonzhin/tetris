@@ -26,6 +26,10 @@ public class GameController {
     @FXML
     public Canvas stashFigure;
     @FXML
+    public Label lblStash;
+    @FXML
+    public Label lblNext;
+    @FXML
     private Button btnStart;
     @FXML
     private Canvas gameCanvas;
@@ -47,6 +51,8 @@ public class GameController {
         this.game.start();
         this.btnStart.setDisable(true);
         this.btnStop.setVisible(true);
+        this.lblNext.setVisible(true);
+        this.lblStash.setVisible(true);
     }
 
     @FXML

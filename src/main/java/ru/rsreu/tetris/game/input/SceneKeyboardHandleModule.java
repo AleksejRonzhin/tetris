@@ -1,6 +1,7 @@
 package ru.rsreu.tetris.game.input;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import ru.rsreu.tetris.game.ShiftDirection;
 
 public class SceneKeyboardHandleModule implements KeyboardHandleModule {
@@ -9,6 +10,7 @@ public class SceneKeyboardHandleModule implements KeyboardHandleModule {
     private boolean wasRotateRequested = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private boolean wasBoostRequested = false;
+    private boolean wasStashRequested = false;
 
     public SceneKeyboardHandleModule(Scene scene) {
         this.scene = scene;
@@ -35,11 +37,17 @@ public class SceneKeyboardHandleModule implements KeyboardHandleModule {
     }
 
     @Override
+    public boolean wasStashRequested() {
+        return this.wasStashRequested;
+    }
+
+    @Override
     public void clean() {
         wasEscPressed = false;
         wasRotateRequested = false;
         shiftDirection = ShiftDirection.NONE;
         wasBoostRequested = false;
+        wasStashRequested = false;
     }
 
     @Override
@@ -51,6 +59,7 @@ public class SceneKeyboardHandleModule implements KeyboardHandleModule {
                 case D, RIGHT -> shiftDirection = ShiftDirection.RIGHT;
                 case W, UP -> wasRotateRequested = true;
                 case S, DOWN -> wasBoostRequested = true;
+                case C -> wasStashRequested = true;
             }
         });
     }

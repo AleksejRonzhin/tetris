@@ -24,6 +24,7 @@ public class Game extends Node {
     private boolean isEnd = false;
     private boolean isRotate = false;
     private boolean isBoost = false;
+    private boolean isStash = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private int loopNumber = 0;
     private final ResourceBundle bundle;
@@ -69,10 +70,16 @@ public class Game extends Node {
         this.isEnd = keyboardHandleModule.wasEscPressed();
         this.isRotate = keyboardHandleModule.wasRotateRequested();
         this.isBoost = keyboardHandleModule.wasBoostRequested();
+        this.isStash = keyboardHandleModule.wasStashRequested();
         keyboardHandleModule.clean();
     }
 
     private void logic() {
+        if(isStash){
+            System.out.println("STASH");
+            gameField.stashFigure();
+            isStash = false;
+        }
         if (shiftDirection != ShiftDirection.NONE) {
             gameField.tryShiftFigure(shiftDirection);
             shiftDirection = ShiftDirection.NONE;

@@ -10,7 +10,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.net.URL;
 
 public class Controller {
@@ -45,22 +44,15 @@ public class Controller {
 
     public void loadForm(FXMLLoader fxmlLoader) throws Exception {
         Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().add(new Image("ru/rsreu/tetris/icons/icon.png"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        application.getStage().hide();
+        stage.initModality(Modality.APPLICATION_MODAL);
+
+        Stage oldStage = application.getStage();
+        oldStage.hide();
         stage.showAndWait();
-        application.stop();
-        application.start(stage);
-//        Stage stage = new Stage();
-//        stage.initStyle(StageStyle.UNDECORATED);
-//        stage.getIcons().add(new Image("https://cdn-icons.flaticon.com/png/512/2281/premium/2281729.png?token=exp=1640022582~hmac=22d4ae3c4beeb73048da87789b8fa5bc"));
-//        Scene scene = new Scene(fxmlLoader.load());
-//        stage.setScene(scene);
-//        stage.initModality(Modality.APPLICATION_MODAL);
-//
-//        Stage oldStage = application.getStage();
-////        oldStage.hide();
-//        stage.showAndWait();
-//        application.start(oldStage);
+        application.restart();
     }
 }

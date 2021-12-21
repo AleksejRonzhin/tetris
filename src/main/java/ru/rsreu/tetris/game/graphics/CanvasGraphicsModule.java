@@ -3,7 +3,10 @@ package ru.rsreu.tetris.game.graphics;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import ru.rsreu.tetris.game.*;
+import ru.rsreu.tetris.game.ColorBundle;
+import ru.rsreu.tetris.game.Coords;
+import ru.rsreu.tetris.game.Figure;
+import ru.rsreu.tetris.game.GameField;
 
 public class CanvasGraphicsModule implements GraphicsModule {
 
@@ -29,41 +32,45 @@ public class CanvasGraphicsModule implements GraphicsModule {
         drawBackground();
         drawField(field);
         drawFigure(field.getFigure());
-        drawNextFigure(field.getFigure());
-        drawStashFigure(field.getFigure());
+        drawBorder();
+        drawNextFigure(field.getNextFigure());
+        drawStashFigure(field.getStashFigure());
     }
 
     public void drawNextFigure(Figure figure) {
         GraphicsContext gc = this.nextFigure.getGraphicsContext2D();
-        Color color = figure.getColor();
-        gc.setFill(this.colorBundle.getBackgroundColor());
-        gc.fillRect(0, 0, 100, 100);
-        gc.setFill(color);
-        for(Coords coords: figure.getForm().getMask().generateFigure(new Coords(0, 0), RotationMode.NORMAL)){
-            gc.fillRect( coords.getX() * size + 1.5,
-                    (-coords.getY()) * size + 1.5, size - 3, size - 3);
-        }
+        drawViewFigure(gc, figure);
     }
 
     public void drawStashFigure(Figure figure) {
+        if (figure == null) {
+            return;
+        }
         GraphicsContext gc = this.stashFigure.getGraphicsContext2D();
-        Color color = figure.getColor();
+        drawViewFigure(gc, figure);
+    }
+
+    private void drawViewFigure(GraphicsContext gc, Figure figure) {
         gc.setFill(this.colorBundle.getBackgroundColor());
-        gc.fillRect(0, 0, 100, 100);
-        gc.setFill(color);
-        for(Coords coords: figure.getForm().getMask().generateFigure(new Coords(0, 0), RotationMode.NORMAL)){
-            gc.fillRect( coords.getX() * size + 1.5,
-                    (-coords.getY()) * size + 1.5, size - 3, size - 3);
+        gc.fillRect(0, 0, this.stashFigure.getWidth(), this.stashFigure.getHeight());
+        gc.setFill(colorBundle.getTextColor());
+        for (Coords coords : figure.getForm().getMask().getView()) {
+            gc.fillRect(coords.getX() * size + 1.5,
+                    (coords.getY()) * size + 1.5, size - 3, size - 3);
         }
     }
 
     private void drawBackground() {
         gc.setFill(this.colorBundle.getBackgroundColor());
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+    private void drawBorder() {
         gc.setStroke(this.colorBundle.getTextColor());
         gc.setLineWidth(5);
         gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
+
 
     private void drawField(GameField field) {
         for (int x = 0; x < GameField.COUNT_CELLS_X; x++) {
@@ -75,8 +82,8 @@ public class CanvasGraphicsModule implements GraphicsModule {
 
     private void drawBlock(Color color, Coords coords) {
         gc.setFill(color);
-        gc.fillRect( borderSize + coords.getX() * size + 1.5,
-                 canvas.getHeight() - borderSize - (coords.getY() + 1) * size + 1.5, size - 3, size - 3);
+        gc.fillRect(borderSize + coords.getX() * size + 1.5,
+                canvas.getHeight() - borderSize - (coords.getY() + 1) * size + 1.5, size - 3, size - 3);
     }
 
     private void drawFigure(Figure figure) {

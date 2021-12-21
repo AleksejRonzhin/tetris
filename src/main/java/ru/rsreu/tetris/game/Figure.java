@@ -31,6 +31,10 @@ public class Figure {
         return form;
     }
 
+    public void setMetaCoords(Coords metaCoords) {
+        this.metaCoords = metaCoords;
+    }
+
     public Coords[] getCoords() {
         return form.getMask().generateFigure(metaCoords, currentRotation);
     }

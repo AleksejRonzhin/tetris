@@ -1,5 +1,6 @@
 package ru.rsreu.tetris.game;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class GameField {
@@ -10,6 +11,9 @@ public class GameField {
     private final Block[][] field;
     private final int[] countFilledCells;
     private Figure figure;
+    private Figure nextFigure;
+    private Figure stashFigure = null;
+    private boolean canStash = true;
     private int score;
     private final ColorBundle colorBundle;
 
@@ -36,9 +40,23 @@ public class GameField {
         return this.figure;
     }
 
+    public Figure getStashFigure() {
+        return stashFigure;
+    }
+
+    public Figure getNextFigure() {
+        return nextFigure;
+    }
+
     private void spawnNewFigure() {
+        this.figure = Objects.requireNonNullElseGet(nextFigure, this::getNewFigure);
+        this.nextFigure = getNewFigure();
+        this.canStash = true;
+    }
+
+    private Figure getNewFigure(){
         int randomX = new Random().nextInt(COUNT_CELLS_X - 4);
-        this.figure = new Figure(new Coords(randomX, COUNT_CELLS_Y + OFFSET_TOP - 1), this.colorBundle);
+        return new Figure(new Coords(randomX, COUNT_CELLS_Y + OFFSET_TOP - 1), this.colorBundle);
     }
 
     public boolean isNotEmpty(int x, int y) {
@@ -156,5 +174,22 @@ public class GameField {
 
     public int getScore() {
         return this.score;
+    }
+
+    public void stashFigure() {
+        if(!canStash){
+            return;
+        }
+        if(stashFigure != null){
+            Figure temp = figure;
+            this.figure = this.stashFigure;
+            this.stashFigure = temp;
+        } else {
+            this.stashFigure = this.figure;
+            this.figure = this.nextFigure;
+            this.nextFigure = getNewFigure();
+        }
+        figure.setMetaCoords(new Coords(3,COUNT_CELLS_Y + OFFSET_TOP - 1));
+        canStash = false;
     }
 }

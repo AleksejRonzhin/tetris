@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane fx:id="bpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="420.0" styleClass="borderPane" xmlns="http://javafx.com/javafx/16"
+            prefHeight="600.0" prefWidth="550.0" styleClass="borderPane" xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.tetris.GameController">
 
     <bottom>
@@ -21,11 +21,11 @@
         <Canvas fx:id="gameCanvas" height="500" width="250" StackPane.alignment="CENTER"/>
     </center>
     <right>
-        <VBox>
-            <Label text="Next figure:"/>
-            <Canvas fx:id="nextFigure" height="100" width="100"/>
-            <Label text="Stash figure:"/>
-            <Canvas fx:id="stashFigure" height="100" width="100"/>
+        <VBox StackPane.alignment="CENTER">
+            <Label fx:id="lblNext" text="%nextFigure" visible="false"/>
+            <Canvas fx:id="nextFigure" height="150" width="125"/>
+            <Label fx:id="lblStash" text="%StashFigure" visible="false"/>
+            <Canvas fx:id="stashFigure" height="150" width="125"/>
         </VBox>
     </right>
     <top>

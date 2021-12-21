@@ -27,7 +27,7 @@ public class Application extends javafx.application.Application {
         Language.updateBundle(language);
         ColorTheme.updateBundle(language);
         this.stage = stage;
-        stage.getIcons().add(new Image("https://cdn-icons.flaticon.com/png/512/2281/premium/2281729.png?token=exp=1640022582~hmac=22d4ae3c4beeb73048da87789b8fa5bc"));
+        stage.getIcons().add(new Image("ru/rsreu/tetris/icons/icon.png"));
         URL location = Application.class.getResource("main-menu.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location, bundle);
         fxmlLoader.setControllerFactory(param -> new Controller(this));
@@ -58,5 +58,10 @@ public class Application extends javafx.application.Application {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public void restart() throws Exception {
+        stop();
+        start(this.stage);
     }
 }

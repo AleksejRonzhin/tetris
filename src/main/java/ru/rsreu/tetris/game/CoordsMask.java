@@ -21,7 +21,8 @@ public enum CoordsMask {
                     }
                 }
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 1), new Coords(2, 2), new Coords(2, 3), new Coords(2, 4)}
     ),
     O_FORM(
             (coords, rotation) -> {
@@ -33,7 +34,8 @@ public enum CoordsMask {
                 realCoords[2] = new Coords(x + 1, y - 1);
                 realCoords[3] = new Coords(x + 1, y);
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 2), new Coords(2, 3), new Coords(3, 3), new Coords(3, 2) }
     ),
     T_FORM(
             (coords, rotation) -> {
@@ -67,7 +69,8 @@ public enum CoordsMask {
                     }
                 }
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 2), new Coords(3, 2), new Coords(4, 2), new Coords(3, 3)}
     ),
     J_FORM(
             (coords, rotation) -> {
@@ -101,7 +104,8 @@ public enum CoordsMask {
                     }
                 }
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 2), new Coords(3, 2), new Coords(3, 3), new Coords(3, 4)}
     ),
     L_FORM(
             (coords, rotation) -> {
@@ -135,7 +139,8 @@ public enum CoordsMask {
                     }
                 }
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 2), new Coords(2, 3), new Coords(2, 4), new Coords(3, 4)}
     ),
     S_FORM(
             (coords, rotation) -> {
@@ -157,7 +162,8 @@ public enum CoordsMask {
                     }
                 }
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 3), new Coords(3, 3), new Coords(3, 2), new Coords(4, 2)}
     ),
     Z_FORM(
             (coords, rotation) -> {
@@ -179,17 +185,25 @@ public enum CoordsMask {
                     }
                 }
                 return realCoords;
-            }
+            },
+            new Coords[]{new Coords(2, 2), new Coords(3, 2), new Coords(3, 3), new Coords(4, 3)}
     );
 
     private final Generation generation;
 
-    CoordsMask(Generation generation) {
+    private final Coords[] view;
+
+    CoordsMask(Generation generation, Coords[] view) {
         this.generation = generation;
+        this.view = view;
     }
 
     public Coords[] generateFigure(Coords coords, RotationMode mode) {
         return this.generation.generateFigure(coords, mode);
+    }
+
+    public Coords[] getView() {
+        return view;
     }
 
     private interface Generation {

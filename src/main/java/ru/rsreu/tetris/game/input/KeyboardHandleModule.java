@@ -13,5 +13,7 @@ public interface KeyboardHandleModule {
 
     boolean wasBoostRequested();
 
+    boolean wasStashRequested();
+
     void clean();
 }
