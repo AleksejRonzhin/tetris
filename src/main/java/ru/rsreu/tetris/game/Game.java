@@ -1,7 +1,6 @@
 package ru.rsreu.tetris.game;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
@@ -13,7 +12,7 @@ import ru.rsreu.tetris.game.input.SceneKeyboardHandleModule;
 
 import java.util.ResourceBundle;
 
-public class Game extends Node {
+public class Game {
     public static final int MOVE_DOWNS_PER_SECOND = 3;
     public static final int FPS = 60;
     public static final int FRAMES_PER_MOVE = FPS / MOVE_DOWNS_PER_SECOND;
@@ -47,6 +46,7 @@ public class Game extends Node {
         keyboardHandleModule = new SceneKeyboardHandleModule(this.scene);
         this.bundle = bundle;
         gameField = new GameField(colorBundle);
+        keyboardHandleModule.update();
     }
 
     public void start() {
@@ -66,7 +66,6 @@ public class Game extends Node {
     }
 
     private void input() {
-        keyboardHandleModule.update();
         this.shiftDirection = keyboardHandleModule.getShiftDirection();
         this.isEnd = keyboardHandleModule.wasEscPressed();
         this.isRotate = keyboardHandleModule.wasRotateRequested();
@@ -100,6 +99,7 @@ public class Game extends Node {
         Label label = (Label) scene.lookup("#lblScore");
         label.setText(bundle.getString("score") + ": " + this.gameField.getScore());
     }
+
 
 
 

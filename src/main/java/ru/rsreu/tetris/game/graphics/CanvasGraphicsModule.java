@@ -5,8 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import ru.rsreu.tetris.game.ColorBundle;
 import ru.rsreu.tetris.game.Coords;
-import ru.rsreu.tetris.game.figure.Figure;
 import ru.rsreu.tetris.game.GameField;
+import ru.rsreu.tetris.game.figure.Figure;
 
 public class CanvasGraphicsModule implements GraphicsModule {
 
@@ -14,16 +14,15 @@ public class CanvasGraphicsModule implements GraphicsModule {
     private final Canvas canvas;
     private final Canvas nextFigure;
     private final Canvas stashFigure;
-    private final GraphicsContext gc;
     private final ColorBundle colorBundle;
     private final int borderSize = 5;
+    private final int flop = 3;
 
     public CanvasGraphicsModule(Canvas canvas, Canvas nextFigure, Canvas stashFigure, ColorBundle colorBundle) {
         this.canvas = canvas;
         this.nextFigure = nextFigure;
         this.stashFigure = stashFigure;
         this.colorBundle = colorBundle;
-        gc = canvas.getGraphicsContext2D();
         size = (int) ((canvas.getHeight() - 2 * borderSize) / GameField.COUNT_CELLS_Y);
     }
 
@@ -55,22 +54,24 @@ public class CanvasGraphicsModule implements GraphicsModule {
         drawBackgroundViewFigure(gc);
         gc.setFill(colorBundle.getTextColor());
         for (Coords coords : figure.getForm().getMask().getView()) {
-            gc.fillRect(coords.getX() * size + 1.5,
-                    (coords.getY()) * size + 1.5, size - 3, size - 3);
+            gc.fillRect(coords.getX() * size + flop / 2,
+                    (coords.getY()) * size + flop / 2, size - flop, size - flop);
         }
     }
 
-    private void drawBackgroundViewFigure(GraphicsContext gc){
+    private void drawBackgroundViewFigure(GraphicsContext gc) {
         gc.setFill(this.colorBundle.getBackgroundColor());
         gc.fillRect(0, 0, this.stashFigure.getWidth(), this.stashFigure.getHeight());
     }
 
     private void drawBackground() {
+        GraphicsContext gc = this.canvas.getGraphicsContext2D();
         gc.setFill(this.colorBundle.getBackgroundColor());
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private void drawBorder() {
+        GraphicsContext gc = this.canvas.getGraphicsContext2D();
         gc.setStroke(this.colorBundle.getTextColor());
         gc.setLineWidth(5);
         gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -86,9 +87,10 @@ public class CanvasGraphicsModule implements GraphicsModule {
     }
 
     private void drawBlock(Color color, Coords coords) {
+        GraphicsContext gc = this.canvas.getGraphicsContext2D();
         gc.setFill(color);
-        gc.fillRect(borderSize + coords.getX() * size + 1.5,
-                canvas.getHeight() - borderSize - (coords.getY() + 1) * size + 1.5, size - 3, size - 3);
+        gc.fillRect(borderSize + coords.getX() * size + flop / 2,
+                canvas.getHeight() - borderSize - (coords.getY() + 1) * size + flop / 2, size - flop, size - flop);
     }
 
     private void drawFigure(Figure figure) {

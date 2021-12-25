@@ -31,14 +31,14 @@ public class SettingController {
     public void initialize() {
         ColorTheme theme = application.getColorTheme();
         this.bpSettings.getStylesheets().add(theme.getPath());
-        colorThemeChoiceBox.setValue(theme);
-        colorThemeChoiceBox.getItems().addAll(ColorTheme.themes);
-        languageChoiceBox.setValue(application.getLanguage());
-        languageChoiceBox.getItems().addAll(Language.languages);
-        musicSlider.setMin(0);
-        musicSlider.setMax(100);
-        musicSlider.setShowTickLabels(false);
-        musicSlider.setValue(application.getPlayer().getVolume() * 100);
+        this.colorThemeChoiceBox.setValue(theme);
+        this.colorThemeChoiceBox.getItems().addAll(ColorTheme.themes);
+        this.languageChoiceBox.setValue(application.getLanguage());
+        this.languageChoiceBox.getItems().addAll(Language.languages);
+        this.musicSlider.setMin(0);
+        this.musicSlider.setMax(100);
+        this.musicSlider.setShowTickLabels(false);
+        this.musicSlider.setValue(application.getPlayer().getVolume() * 100);
     }
 
     public void btnSaveOnAction() {
