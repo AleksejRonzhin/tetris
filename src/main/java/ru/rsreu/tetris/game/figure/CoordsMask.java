@@ -1,4 +1,6 @@
-package ru.rsreu.tetris.game;
+package ru.rsreu.tetris.game.figure;
+
+import ru.rsreu.tetris.game.Coords;
 
 public enum CoordsMask {
     I_FORM(
@@ -190,7 +192,6 @@ public enum CoordsMask {
     );
 
     private final Generation generation;
-
     private final Coords[] view;
 
     CoordsMask(Generation generation, Coords[] view) {

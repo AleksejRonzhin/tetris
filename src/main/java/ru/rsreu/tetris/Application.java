@@ -15,30 +15,35 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Application extends javafx.application.Application {
-    private ColorTheme colorTheme = ColorTheme.LIGHT;
-    private Language language = Language.DEFAULT;
+    private ColorTheme colorTheme;
+    private Language language;
     private ResourceBundle bundle;
-    private Stage stage = null;
-    private MediaPlayer player = null;
+    private Stage stage;
+    private MediaPlayer player;
 
     public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
-        if(player == null){
-            Media media = new Media(new
-                    File("src/main/resources/ru/rsreu/tetris/music/music.mp3").toURI().toString());
-            this.player = new MediaPlayer(media);
-            player.setVolume(0.2);
-            player.setCycleCount(0);
-            player.play();
-        }
+    public void init() throws Exception {
+        super.init();
+        Media media = new Media(new
+                File("src/main/resources/ru/rsreu/tetris/music/music.mp3").toURI().toString());
+        this.player = new MediaPlayer(media);
+        this.player.setVolume(0.2);
+        this.player.setCycleCount(MediaPlayer.INDEFINITE);
+        this.player.play();
+        this.colorTheme = ColorTheme.LIGHT;
+        this.language = Language.DEFAULT;
+    }
 
+    @Override
+    public void start(Stage stage) throws IOException {
         this.bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", language.getLocale());
         Language.updateBundle(language);
         ColorTheme.updateBundle(language);
+
         this.stage = stage;
         stage.getIcons().add(new Image("ru/rsreu/tetris/icons/icon.png"));
         URL location = Application.class.getResource("main-menu.fxml");

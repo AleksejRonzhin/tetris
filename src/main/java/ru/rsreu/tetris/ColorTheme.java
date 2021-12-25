@@ -14,11 +14,11 @@ public enum ColorTheme {
 
     public static ColorTheme[] themes = {LIGHT, DARK};
     private static ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", Language.DEFAULT.getLocale());
-    String path;
-    String text;
-    Color[] figuresColors;
-    Color backgroundColor;
-    Color textColor;
+    private final String path;
+    private final String text;
+    private final Color[] figuresColors;
+    private final Color backgroundColor;
+    private final Color textColor;
 
     ColorTheme(String path, String text, Color[] figuresColors, Color backgroundColor, Color textColor) {
         this.path = path;

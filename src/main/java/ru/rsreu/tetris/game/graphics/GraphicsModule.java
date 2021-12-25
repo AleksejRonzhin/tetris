@@ -1,6 +1,6 @@
 package ru.rsreu.tetris.game.graphics;
 
-import ru.rsreu.tetris.game.Figure;
+import ru.rsreu.tetris.game.figure.Figure;
 import ru.rsreu.tetris.game.GameField;
 
 public interface GraphicsModule {

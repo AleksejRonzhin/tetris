@@ -8,7 +8,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class SettingController {
-    private final Application application;
     @FXML
     public BorderPane bpSettings;
     @FXML
@@ -21,6 +20,8 @@ public class SettingController {
     public ChoiceBox<Language> languageChoiceBox;
     @FXML
     public Slider musicSlider;
+
+    private final Application application;
 
     public SettingController(Application application) {
         this.application = application;

@@ -1,6 +1,8 @@
-package ru.rsreu.tetris.game;
+package ru.rsreu.tetris.game.figure;
 
 import javafx.scene.paint.Color;
+import ru.rsreu.tetris.game.ColorBundle;
+import ru.rsreu.tetris.game.Coords;
 
 import java.util.Random;
 

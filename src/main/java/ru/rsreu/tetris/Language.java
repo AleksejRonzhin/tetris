@@ -12,15 +12,15 @@ public enum Language {
     private static ResourceBundle bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", DEFAULT.getLocale());
 
     private final Locale locale;
-    private final String text;
+    private final String title;
 
-    public static void updateBundle(Language language){
+    public static void updateBundle(Language language) {
         bundle = ResourceBundle.getBundle("ru/rsreu/tetris/bundle", language.getLocale());
     }
 
-    Language(Locale locale, String text) {
+    Language(Locale locale, String title) {
         this.locale = locale;
-        this.text = text;
+        this.title = title;
     }
 
     public Locale getLocale() {
@@ -29,6 +29,6 @@ public enum Language {
 
     @Override
     public String toString() {
-        return bundle.getString(text);
+        return bundle.getString(title);
     }
 }

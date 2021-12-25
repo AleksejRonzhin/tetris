@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import ru.rsreu.tetris.game.figure.ShiftDirection;
 import ru.rsreu.tetris.game.graphics.CanvasGraphicsModule;
 import ru.rsreu.tetris.game.graphics.GraphicsModule;
 import ru.rsreu.tetris.game.input.KeyboardHandleModule;
@@ -21,13 +22,13 @@ public class Game extends Node {
     private final KeyboardHandleModule keyboardHandleModule;
     private final GameField gameField;
     private final Scene scene;
+    private final ResourceBundle bundle;
     private boolean isEnd = false;
     private boolean isRotate = false;
     private boolean isBoost = false;
     private boolean isStash = false;
     private ShiftDirection shiftDirection = ShiftDirection.NONE;
     private int loopNumber = 0;
-    private final ResourceBundle bundle;
     private final AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
@@ -75,8 +76,7 @@ public class Game extends Node {
     }
 
     private void logic() {
-        if(isStash){
-            System.out.println("STASH");
+        if (isStash) {
             gameField.stashFigure();
             isStash = false;
         }
@@ -100,5 +100,7 @@ public class Game extends Node {
         Label label = (Label) scene.lookup("#lblScore");
         label.setText(bundle.getString("score") + ": " + this.gameField.getScore());
     }
+
+
 
 }

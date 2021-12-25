@@ -13,16 +13,16 @@ import javafx.stage.StageStyle;
 import java.net.URL;
 
 public class Controller {
+    private final Application application;
     @FXML
     public BorderPane bpMainMenu;
-    private final Application application;
 
     public Controller(Application application) {
         this.application = application;
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         bpMainMenu.getStylesheets().add(application.getColorTheme().getPath());
     }
 
@@ -50,8 +50,7 @@ public class Controller {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
 
-        Stage oldStage = application.getStage();
-        oldStage.hide();
+        application.getStage().hide();
         stage.showAndWait();
         application.restart();
     }

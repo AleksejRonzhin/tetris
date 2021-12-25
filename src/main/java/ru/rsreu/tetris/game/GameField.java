@@ -1,6 +1,8 @@
 package ru.rsreu.tetris.game;
 
-import java.util.Objects;
+import ru.rsreu.tetris.game.figure.Figure;
+import ru.rsreu.tetris.game.figure.ShiftDirection;
+
 import java.util.Random;
 
 public class GameField {
@@ -10,18 +12,23 @@ public class GameField {
 
     private final Block[][] field;
     private final int[] countFilledCells;
+    private final ColorBundle colorBundle;
     private Figure figure;
     private Figure nextFigure;
     private Figure stashFigure = null;
     private boolean canStash = true;
     private int score;
-    private final ColorBundle colorBundle;
 
     public GameField(ColorBundle colorBundle) {
         this.colorBundle = colorBundle;
+        nextFigure = getNewFigure();
         spawnNewFigure();
         field = new Block[COUNT_CELLS_X][COUNT_CELLS_Y + OFFSET_TOP];
         countFilledCells = new int[COUNT_CELLS_Y + OFFSET_TOP];
+        fillField();
+    }
+
+    private void fillField() {
         for (int x = 0; x < COUNT_CELLS_X; x++) {
             for (int y = 0; y < COUNT_CELLS_Y + OFFSET_TOP; y++) {
                 field[x][y] = Block.EMPTY;
@@ -49,12 +56,12 @@ public class GameField {
     }
 
     private void spawnNewFigure() {
-        this.figure = Objects.requireNonNullElseGet(nextFigure, this::getNewFigure);
+        this.figure = this.nextFigure;
         this.nextFigure = getNewFigure();
         this.canStash = true;
     }
 
-    private Figure getNewFigure(){
+    private Figure getNewFigure() {
         int randomX = new Random().nextInt(COUNT_CELLS_X - 4);
         return new Figure(new Coords(randomX, COUNT_CELLS_Y + OFFSET_TOP - 1), this.colorBundle);
     }
@@ -154,12 +161,12 @@ public class GameField {
     }
 
     private void fallLineDown(int fallFrom, int fallTo) {
-            for (int x = 0; x < COUNT_CELLS_X; x++) {
-                field[x][fallTo] = field[x][fallFrom];
-                field[x][fallFrom] = Block.EMPTY;
-            }
-            countFilledCells[fallTo] = countFilledCells[fallFrom];
-            countFilledCells[fallFrom] = 0;
+        for (int x = 0; x < COUNT_CELLS_X; x++) {
+            field[x][fallTo] = field[x][fallFrom];
+            field[x][fallFrom] = Block.EMPTY;
+        }
+        countFilledCells[fallTo] = countFilledCells[fallFrom];
+        countFilledCells[fallFrom] = 0;
     }
 
     public boolean isOverfilled() {
@@ -177,10 +184,10 @@ public class GameField {
     }
 
     public void stashFigure() {
-        if(!canStash){
+        if (!canStash) {
             return;
         }
-        if(stashFigure != null){
+        if (stashFigure != null) {
             Figure temp = figure;
             this.figure = this.stashFigure;
             this.stashFigure = temp;
@@ -189,7 +196,7 @@ public class GameField {
             this.figure = this.nextFigure;
             this.nextFigure = getNewFigure();
         }
-        figure.setMetaCoords(new Coords(3,COUNT_CELLS_Y + OFFSET_TOP - 1));
+        figure.setMetaCoords(new Coords(new Random().nextInt(COUNT_CELLS_X - 4), COUNT_CELLS_Y + OFFSET_TOP - 1));
         canStash = false;
     }
 }

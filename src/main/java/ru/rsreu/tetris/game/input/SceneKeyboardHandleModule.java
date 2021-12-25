@@ -1,8 +1,7 @@
 package ru.rsreu.tetris.game.input;
 
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import ru.rsreu.tetris.game.ShiftDirection;
+import ru.rsreu.tetris.game.figure.ShiftDirection;
 
 public class SceneKeyboardHandleModule implements KeyboardHandleModule {
     Scene scene;

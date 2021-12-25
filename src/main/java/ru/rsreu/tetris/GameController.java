@@ -5,16 +5,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import ru.rsreu.tetris.game.ColorBundle;
 import ru.rsreu.tetris.game.Game;
 
-import java.io.File;
-
 public class GameController {
-    private final Application application;
     @FXML
     public Button btnStop;
     @FXML
@@ -37,6 +32,8 @@ public class GameController {
     private Button btnStart;
     @FXML
     private Canvas gameCanvas;
+
+    private final Application application;
     private Game game;
 
     public GameController(Application application) {

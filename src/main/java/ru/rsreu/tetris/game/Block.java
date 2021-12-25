@@ -4,10 +4,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Block extends Rectangle {
-    private final Color color;
     public static final Block EMPTY = new Block(Color.TRANSPARENT);
 
-    public Block(Color color){
+    private final Color color;
+
+    public Block(Color color) {
         this.color = color;
     }
 

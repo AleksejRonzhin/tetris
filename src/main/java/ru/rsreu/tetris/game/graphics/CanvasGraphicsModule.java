@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import ru.rsreu.tetris.game.ColorBundle;
 import ru.rsreu.tetris.game.Coords;
-import ru.rsreu.tetris.game.Figure;
+import ru.rsreu.tetris.game.figure.Figure;
 import ru.rsreu.tetris.game.GameField;
 
 public class CanvasGraphicsModule implements GraphicsModule {
@@ -43,21 +43,26 @@ public class CanvasGraphicsModule implements GraphicsModule {
     }
 
     public void drawStashFigure(Figure figure) {
+        GraphicsContext gc = this.stashFigure.getGraphicsContext2D();
         if (figure == null) {
+            drawBackgroundViewFigure(gc);
             return;
         }
-        GraphicsContext gc = this.stashFigure.getGraphicsContext2D();
         drawViewFigure(gc, figure);
     }
 
     private void drawViewFigure(GraphicsContext gc, Figure figure) {
-        gc.setFill(this.colorBundle.getBackgroundColor());
-        gc.fillRect(0, 0, this.stashFigure.getWidth(), this.stashFigure.getHeight());
+        drawBackgroundViewFigure(gc);
         gc.setFill(colorBundle.getTextColor());
         for (Coords coords : figure.getForm().getMask().getView()) {
             gc.fillRect(coords.getX() * size + 1.5,
                     (coords.getY()) * size + 1.5, size - 3, size - 3);
         }
+    }
+
+    private void drawBackgroundViewFigure(GraphicsContext gc){
+        gc.setFill(this.colorBundle.getBackgroundColor());
+        gc.fillRect(0, 0, this.stashFigure.getWidth(), this.stashFigure.getHeight());
     }
 
     private void drawBackground() {

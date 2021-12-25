@@ -1,4 +1,4 @@
-package ru.rsreu.tetris.game;
+package ru.rsreu.tetris.game.figure;
 
 import java.util.Random;
 
